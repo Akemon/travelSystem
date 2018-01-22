@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="travellerSystem" />
+        <module name="travelSystem" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="travellerSystem" target="1.8" />
+      <module name="travelSystem" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
