@@ -1,5 +1,7 @@
 package travel.yj.instantnode.bean;
 
+import travel.hk.userinfo.bean.UserInfo;
+
 import java.util.Date;
 
 public class InstantNoteComment {
@@ -15,6 +17,8 @@ public class InstantNoteComment {
 
     private String userId;
 
+    private UserInfo userInfo;
+
     private Integer replyCommentId;
 
     private InstantNoteComment replyComment;
@@ -24,6 +28,14 @@ public class InstantNoteComment {
     private Date gmtCreate;
 
     private Date gmtModifited;
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 
     public Integer getInstantNoteCommentId() {
         return instantNoteCommentId;

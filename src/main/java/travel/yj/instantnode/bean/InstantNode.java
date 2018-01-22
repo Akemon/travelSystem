@@ -3,6 +3,7 @@ package travel.yj.instantnode.bean;
 import travel.hk.userinfo.bean.UserInfo;
 
 import java.util.Date;
+import java.util.List;
 
 public class InstantNode {
     private Integer instantNoteId;
@@ -22,6 +23,26 @@ public class InstantNode {
     private Date gmtCreate;
 
     private Date gmtModifited;
+
+    private List<InstantNotePicture> listInstantNotePicture;
+
+    private List<InstantNoteComment> listInstantNodeComment;
+
+    public List<InstantNoteComment> getListInstantNodeComment() {
+        return listInstantNodeComment;
+    }
+
+    public void setListInstantNodeComment(List<InstantNoteComment> listInstantNodeComment) {
+        this.listInstantNodeComment = listInstantNodeComment;
+    }
+
+    public List<InstantNotePicture> getListInstantNotePicture() {
+        return listInstantNotePicture;
+    }
+
+    public void setListInstantNotePicture(List<InstantNotePicture> listInstantNotePicture) {
+        this.listInstantNotePicture = listInstantNotePicture;
+    }
 
     public Integer getInstantNoteId() {
         return instantNoteId;
