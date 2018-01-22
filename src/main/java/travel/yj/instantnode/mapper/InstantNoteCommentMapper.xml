@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="travel.yj.instantnode.mapper.InstantNoteCommentMapper" >
+  <resultMap id="BaseResultMap" type="travel.yj.instantnode.bean.InstantNoteComment" >
+    <id column="instant_note_comment_id" property="instantNoteCommentId" jdbcType="INTEGER" />
+    <result column="instant_note_id" property="instantNoteId" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="like_number" property="likeNumber" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="reply_comment_id" property="replyCommentId" jdbcType="INTEGER" />
+    <result column="is_accuse" property="isAccuse" jdbcType="BIT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modifited" property="gmtModifited" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_instant_note_comment
+    where instant_note_comment_id = #{instantNoteCommentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNoteComment" >
+    <selectKey resultType="java.lang.Integer" keyProperty="instantNoteCommentId" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_instant_note_comment (instant_note_comment_id, instant_note_id, 
+      comment, like_number, user_id, 
+      reply_comment_id, is_accuse, gmt_create, 
+      gmt_modifited)
+    values (#{instantNoteCommentId,jdbcType=INTEGER}, #{instantNoteId,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{likeNumber,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{replyCommentId,jdbcType=INTEGER}, #{isAccuse,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModifited,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="travel.yj.instantnode.bean.InstantNoteComment" >
+    update tb_instant_note_comment
+    set instant_note_id = #{instantNoteId,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      reply_comment_id = #{replyCommentId,jdbcType=INTEGER},
+      is_accuse = #{isAccuse,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+    where instant_note_comment_id = #{instantNoteCommentId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select instant_note_comment_id, instant_note_id, comment, like_number, user_id, reply_comment_id, 
+    is_accuse, gmt_create, gmt_modifited
+    from tb_instant_note_comment
+    where instant_note_comment_id = #{instantNoteCommentId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select instant_note_comment_id, instant_note_id, comment, like_number, user_id, reply_comment_id, 
+    is_accuse, gmt_create, gmt_modifited
+    from tb_instant_note_comment
+  </select>
+</mapper>

@@ -1,0 +1,85 @@
+package travel.yj.instantnode.bean;
+
+import java.util.Date;
+
+public class InstantNode {
+    private Integer instantNoteId;
+
+    private String userId;
+
+    private String content;
+
+    private String location;
+
+    private Integer likeNumber;
+
+    private Boolean isAccuse;
+
+    private Date gmtCreate;
+
+    private Date gmtModifited;
+
+    public Integer getInstantNoteId() {
+        return instantNoteId;
+    }
+
+    public void setInstantNoteId(Integer instantNoteId) {
+        this.instantNoteId = instantNoteId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
+    }
+
+    public Integer getLikeNumber() {
+        return likeNumber;
+    }
+
+    public void setLikeNumber(Integer likeNumber) {
+        this.likeNumber = likeNumber;
+    }
+
+    public Boolean getIsAccuse() {
+        return isAccuse;
+    }
+
+    public void setIsAccuse(Boolean isAccuse) {
+        this.isAccuse = isAccuse;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModifited() {
+        return gmtModifited;
+    }
+
+    public void setGmtModifited(Date gmtModifited) {
+        this.gmtModifited = gmtModifited;
+    }
+}
