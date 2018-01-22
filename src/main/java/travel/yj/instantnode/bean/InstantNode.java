@@ -1,11 +1,15 @@
 package travel.yj.instantnode.bean;
 
+import travel.hk.userinfo.bean.UserInfo;
+
 import java.util.Date;
 
 public class InstantNode {
     private Integer instantNoteId;
 
     private String userId;
+
+    private UserInfo userInfo;
 
     private String content;
 
@@ -81,5 +85,13 @@ public class InstantNode {
 
     public void setGmtModifited(Date gmtModifited) {
         this.gmtModifited = gmtModifited;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

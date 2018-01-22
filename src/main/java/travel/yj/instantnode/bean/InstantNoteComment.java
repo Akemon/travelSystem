@@ -7,6 +7,8 @@ public class InstantNoteComment {
 
     private Integer instantNoteId;
 
+    private InstantNode instantNode;
+
     private String comment;
 
     private Integer likeNumber;
@@ -14,6 +16,8 @@ public class InstantNoteComment {
     private String userId;
 
     private Integer replyCommentId;
+
+    private InstantNoteComment replyComment;
 
     private Boolean isAccuse;
 
@@ -91,5 +95,21 @@ public class InstantNoteComment {
 
     public void setGmtModifited(Date gmtModifited) {
         this.gmtModifited = gmtModifited;
+    }
+
+    public InstantNode getInstantNode() {
+        return instantNode;
+    }
+
+    public void setInstantNode(InstantNode instantNode) {
+        this.instantNode = instantNode;
+    }
+
+    public InstantNoteComment getReplyComment() {
+        return replyComment;
+    }
+
+    public void setReplyComment(InstantNoteComment replyComment) {
+        this.replyComment = replyComment;
     }
 }

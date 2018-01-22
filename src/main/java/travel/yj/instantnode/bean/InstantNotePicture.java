@@ -5,6 +5,8 @@ public class InstantNotePicture {
 
     private Integer instantNoteId;
 
+    private InstantNode instantNode;
+
     private String picturePath;
 
     public Integer getInstantNotePictureId() {
@@ -29,5 +31,13 @@ public class InstantNotePicture {
 
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath == null ? null : picturePath.trim();
+    }
+
+    public InstantNode getInstantNode() {
+        return instantNode;
+    }
+
+    public void setInstantNode(InstantNode instantNode) {
+        this.instantNode = instantNode;
     }
 }
