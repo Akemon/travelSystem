@@ -5,22 +5,22 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
-import travel.yj.instantnode.bean.InstantNode;
+import travel.yj.instantnode.bean.InstantNote;
 
-public interface InstantNodeMapper {
+public interface InstantNoteMapper {
     int deleteByPrimaryKey(Integer instantNoteId);
 
-    int insert(InstantNode record);
+    int insert(InstantNote record);
 
-    InstantNode selectByPrimaryKey(Integer instantNoteId);
+    InstantNote selectByPrimaryKey(Integer instantNoteId);
 
-    List<InstantNode> selectAll();
+    List<InstantNote> selectAll();
 
-    int updateByPrimaryKey(InstantNode record);
+    int updateByPrimaryKey(InstantNote record);
 
     @Select({"select * from tb_instant_note where user_id =#{userId}"})
     @ResultMap("BaseResultMap")
-    List<InstantNode> selectByUserId(@Param("userId") String userId);
+    List<InstantNote> selectByUserId(@Param("userId") String userId);
 
 
 }

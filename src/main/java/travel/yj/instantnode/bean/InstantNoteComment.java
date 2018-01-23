@@ -9,7 +9,7 @@ public class InstantNoteComment {
 
     private Integer instantNoteId;
 
-    private InstantNode instantNode;//评论的朋友圈
+    private InstantNote instantNote;//评论的朋友圈
 
     private String comment;
 
@@ -109,12 +109,12 @@ public class InstantNoteComment {
         this.gmtModifited = gmtModifited;
     }
 
-    public InstantNode getInstantNode() {
-        return instantNode;
+    public InstantNote getInstantNote() {
+        return instantNote;
     }
 
-    public void setInstantNode(InstantNode instantNode) {
-        this.instantNode = instantNode;
+    public void setInstantNote(InstantNote instantNote) {
+        this.instantNote = instantNote;
     }
 
     public InstantNoteComment getReplyComment() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="travel.yj.instantnode.mapper.InstantNodeMapper" >
-  <resultMap id="BaseResultMap" type="travel.yj.instantnode.bean.InstantNode" >
+<mapper namespace="travel.yj.instantnode.mapper.InstantNoteMapper" >
+  <resultMap id="BaseResultMap" type="travel.yj.instantnode.bean.InstantNote" >
     <id column="instant_note_id" property="instantNoteId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     delete from tb_instant_note
     where instant_note_id = #{instantNoteId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNode" >
+  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNote" >
     <selectKey resultType="java.lang.Integer" keyProperty="instantNoteId" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -35,7 +35,7 @@
       #{location,jdbcType=VARCHAR}, #{likeNumber,jdbcType=INTEGER}, #{isAccuse,jdbcType=BIT}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="travel.yj.instantnode.bean.InstantNode" >
+  <update id="updateByPrimaryKey" parameterType="travel.yj.instantnode.bean.InstantNote" >
     update tb_instant_note
     set user_id = #{userId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},

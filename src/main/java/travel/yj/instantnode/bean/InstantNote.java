@@ -5,7 +5,7 @@ import travel.hk.userinfo.bean.UserInfo;
 import java.util.Date;
 import java.util.List;
 
-public class InstantNode {
+public class InstantNote {
     private Integer instantNoteId;
 
     private String userId;

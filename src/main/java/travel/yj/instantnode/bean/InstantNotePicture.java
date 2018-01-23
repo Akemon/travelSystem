@@ -5,7 +5,7 @@ public class InstantNotePicture {
 
     private Integer instantNoteId;
 
-    private InstantNode instantNode;//朋友圈内容
+    private InstantNote instantNote;//朋友圈内容
 
     private String picturePath;
 
@@ -33,11 +33,11 @@ public class InstantNotePicture {
         this.picturePath = picturePath == null ? null : picturePath.trim();
     }
 
-    public InstantNode getInstantNode() {
-        return instantNode;
+    public InstantNote getInstantNote() {
+        return instantNote;
     }
 
-    public void setInstantNode(InstantNode instantNode) {
-        this.instantNode = instantNode;
+    public void setInstantNote(InstantNote instantNote) {
+        this.instantNote = instantNote;
     }
 }
