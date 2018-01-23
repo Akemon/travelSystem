@@ -10,6 +10,15 @@
     <result column="is_accuse" property="isAccuse" jdbcType="BIT" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modifited" property="gmtModifited" jdbcType="TIMESTAMP" />
+
+    <association property="userInfo" column="user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    
+    <!--listInstantNotePicture 朋友圈对应的图片-->
+    <collection property="listInstantNotePicture" column="instant_note_id" select="travel.yj.instantnode.mapper.InstantNotePictureMapper.selectByInstantNodeId"></collection>
+
+    <!--listInstantNodeComment 朋友圈对应的评论-->
+    <collection property="listInstantNodeComment" column="instant_note_id" select="travel.yj.instantnode.mapper.InstantNoteCommentMapper.selectByInstantNodeId"></collection>
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_instant_note

@@ -11,6 +11,11 @@
     <result column="is_accuse" property="isAccuse" jdbcType="BIT" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modifited" property="gmtModifited" jdbcType="TIMESTAMP" />
+
+    <association property="userInfo" column="user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+
+    <association property="replyComment" column="reply_comment_id" select="travel.yj.instantnode.mapper.InstantNoteCommentMapper.selectByPrimaryKey"></association>
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_instant_note_comment

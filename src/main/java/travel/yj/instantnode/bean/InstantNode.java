@@ -10,7 +10,7 @@ public class InstantNode {
 
     private String userId;
 
-    private UserInfo userInfo;
+    private UserInfo userInfo;//用户信息
 
     private String content;
 
@@ -24,9 +24,9 @@ public class InstantNode {
 
     private Date gmtModifited;
 
-    private List<InstantNotePicture> listInstantNotePicture;
+    private List<InstantNotePicture> listInstantNotePicture;//朋友圈对应的图片
 
-    private List<InstantNoteComment> listInstantNodeComment;
+    private List<InstantNoteComment> listInstantNodeComment;//朋友圈对应的评论
 
     public List<InstantNoteComment> getListInstantNodeComment() {
         return listInstantNodeComment;

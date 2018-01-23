@@ -5,7 +5,7 @@ public class InstantNotePicture {
 
     private Integer instantNoteId;
 
-    private InstantNode instantNode;
+    private InstantNode instantNode;//朋友圈内容
 
     private String picturePath;
 

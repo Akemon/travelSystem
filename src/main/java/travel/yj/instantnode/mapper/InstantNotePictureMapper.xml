@@ -5,6 +5,9 @@
     <id column="instant_note_picture_id" property="instantNotePictureId" jdbcType="INTEGER" />
     <result column="instant_note_id" property="instantNoteId" jdbcType="INTEGER" />
     <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+
+    <association property="instantNode" column="instant_note_id" select="travel.yj.instantnode.mapper.InstantNodeMapper.selectByPrimaryKey"></association>
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_instant_note_picture

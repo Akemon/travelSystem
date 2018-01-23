@@ -9,7 +9,7 @@ public class InstantNoteComment {
 
     private Integer instantNoteId;
 
-    private InstantNode instantNode;
+    private InstantNode instantNode;//评论的朋友圈
 
     private String comment;
 
@@ -17,11 +17,11 @@ public class InstantNoteComment {
 
     private String userId;
 
-    private UserInfo userInfo;
+    private UserInfo userInfo;//用户信息
 
     private Integer replyCommentId;
 
-    private InstantNoteComment replyComment;
+    private InstantNoteComment replyComment;//回复的评论
 
     private Boolean isAccuse;
 
