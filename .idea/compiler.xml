@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="travellerSystem" target="1.8" />
-      <module name="travelSystem" target="1.8" />
+      <module name="travelSystem" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
