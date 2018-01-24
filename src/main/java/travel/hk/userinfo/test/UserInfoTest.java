@@ -37,6 +37,7 @@ public class UserInfoTest {
             System.out.println("userName:"+userName);
         }
     }
+
     @Test
     public void testSelectOneUser(){
         UserInfo userInfo =userInfoMapper.selectByPrimaryKey(1);

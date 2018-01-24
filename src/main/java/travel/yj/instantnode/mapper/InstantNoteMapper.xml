@@ -24,10 +24,7 @@
     delete from tb_instant_note
     where instant_note_id = #{instantNoteId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNote" >
-    <selectKey resultType="java.lang.Integer" keyProperty="instantNoteId" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNote" useGeneratedKeys="true" keyProperty="instantNoteId">
     insert into tb_instant_note (instant_note_id, user_id, content, 
       location, like_number, is_accuse, 
       gmt_create, gmt_modifited)
