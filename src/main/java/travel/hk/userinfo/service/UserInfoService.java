@@ -18,7 +18,7 @@ public class UserInfoService {
         return userInfoMapper.selectByExample(null);
     }
 
-    public UserInfo getOneUserById(int id){
-        return userInfoMapper.selectByPrimaryKey(id);
+    public UserInfo getOneUserById(String userid){
+        return userInfoMapper.selectByPrimaryKey(userid);
     }
 }

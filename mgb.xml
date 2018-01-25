@@ -11,7 +11,7 @@
             <property name="suppressAllComments" value="true" />
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/travellersystemdata"
+                        connectionURL="jdbc:mysql://localhost:3306/db_travel_system"
                         userId="root"
                         password="">
         </jdbcConnection>
@@ -21,16 +21,16 @@
         </javaTypeResolver>
 
         <!--指定java bean 生成的位置-->
-        <javaModelGenerator targetPackage="traveller.hk.userinfo.bean" targetProject="src\main\java">
+        <javaModelGenerator targetPackage="travel.hk.userinfo.bean" targetProject="src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
         <!--指定Mapper生成的位置-->
-        <sqlMapGenerator targetPackage="traveller.hk.userinfo.mapper"  targetProject="src\main\java">
+        <sqlMapGenerator targetPackage="travel.hk.userinfo.mapper"  targetProject="src\main\java">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
         <!--指定dao接口 生成的位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="traveller.hk.userinfo.mapper"  targetProject="src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="travel.hk.userinfo.mapper"  targetProject="src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

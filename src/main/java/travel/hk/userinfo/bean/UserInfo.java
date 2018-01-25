@@ -3,7 +3,7 @@ package travel.hk.userinfo.bean;
 import java.util.Date;
 
 public class UserInfo {
-    private Integer userId;
+    private String userId;
 
     private String name;
 
@@ -27,12 +27,12 @@ public class UserInfo {
 
     private Date gmtModifited;
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getName() {
