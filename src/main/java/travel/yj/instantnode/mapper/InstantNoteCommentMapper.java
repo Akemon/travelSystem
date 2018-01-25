@@ -2,6 +2,7 @@ package travel.yj.instantnode.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
@@ -18,9 +19,9 @@ public interface InstantNoteCommentMapper {
 
     int updateByPrimaryKey(InstantNoteComment record);
 
-    @Select("select * from tb_instant_note_comment where instant_note_id=#{instantNodeId}")
+    @Select("select * from tb_instant_note_comment where instant_note_id=#{instantNoteId}")
     @ResultMap("BaseResultMap")
-    List<InstantNoteComment> selectByInstantNodeId(@Param("instantNodeId") Integer instantNodeId);
+    List<InstantNoteComment> selectByInstantNodeId(@Param("instantNoteId") Integer instantNoteId);
 
     @Select("select * from tb_instant_note_comment where user_id=#{userId}")
     @ResultMap("BaseResultMap")
@@ -29,4 +30,7 @@ public interface InstantNoteCommentMapper {
     @Select("select * from tb_instant_note_comment where reply_comment_id=#{commentId}")
     @ResultMap("BaseResultMap")
     List<InstantNoteComment> selectByReplyCommentId(@Param("commentId")Integer commentId);
+
+    @Delete(value = "delete * from tb_instant_note_comment where instant_note_id=#{instantNoteId}")
+    void deleteListInstantNoteCommentByInstantNoteId(Integer instantNoteId);
 }

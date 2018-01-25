@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import travel.yj.instantnode.bean.InstantNote;
 import travel.yj.instantnode.bean.InstantNotePicture;
 import travel.yj.instantnode.mapper.InstantNotePictureMapper;
 import travel.yj.instantnode.util.InstantNoteFileUtil;
@@ -15,6 +16,7 @@ import travel.yj.instantnode.util.InstantNoteFileUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class InstantNotePictureService {
 
     @Autowired
     private InstantNotePictureMapper instantNotePictureMapper;
+    @Autowired
+    private InstantNoteService instantNoteService;
+
 
     //查找朋友圈的相片
     public List<InstantNotePicture> listInstantNotePictureByInstantNoteId(Integer instantNoteId){
@@ -31,8 +36,36 @@ public class InstantNotePictureService {
     }
 
     //删除朋友圈的图片
-    public String deleteListInstantNotePictureByInstantNoteId(Integer instantNoteId){
-        return null;
+
+    /**
+     * 删除instantNoteId 删除对应的朋友圈的照片(方法会判断是否存在照片)
+     * @param instantNoteId 需要删除照片的的朋友圈Id
+     * @return 被删除的照片相对路径列表 or 长度为0 的List
+     */
+    public List<String> deleteListInstantNotePictureByInstantNoteId(Integer instantNoteId){
+
+        List<String> listPicturePath=new ArrayList<String>();
+
+        InstantNote instantNote=instantNoteService.selectOneInstantNoteById(instantNoteId);
+        //1.获取对应的朋友圈照片
+        List<InstantNotePicture> listInstantNotePicture=instantNote.getListInstantNotePicture();
+        //2.删除照片
+        for(InstantNotePicture picture:listInstantNotePicture){
+            listPicturePath.add(picture.getPicturePath());//记录文件路径
+            instantNotePictureMapper.deleteByPrimaryKey(picture.getInstantNotePictureId());
+        }
+        return listPicturePath;
+    }
+
+    public boolean deleteListInstantNotePictureInFileSystem(List<String> listAbsoluteNotePicturePath){
+        if(listAbsoluteNotePicturePath.size()==0){
+            return true;
+        }
+        //删除文件系统的朋友圈照片
+        for (String instantNotePicturePath:listAbsoluteNotePicturePath) {
+            deleteOneInstantNotePicture(instantNotePicturePath);
+        }
+        return true;
     }
 
     /**
@@ -86,6 +119,19 @@ public class InstantNotePictureService {
         instantNotePicture.setInstantNoteId(instantNoteId);
         instantNotePicture.setPicturePath(relativePath);
         instantNotePictureMapper.insert(instantNotePicture);
+    }
+
+    private boolean deleteOneInstantNotePicture(String absoluteNotePicturePath){
+        String basePath= InstantNoteFileUtil.getInstantNotePictureBasePath();
+        File file=new File(basePath,absoluteNotePicturePath);
+        if(!file.exists()){
+            throw new IllegalArgumentException("需要删除的朋友圈照片不存在!");
+        }
+        boolean isDelete=file.delete();
+        if(!isDelete){
+            throw new IllegalArgumentException("朋友圈照片删除失败");
+        }
+        return isDelete;
     }
 
 
