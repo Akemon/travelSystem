@@ -1,11 +1,16 @@
 package travel.yj.instantnode.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.service.UserInfoService;
 import travel.yj.instantnode.bean.InstantNote;
+import travel.yj.instantnode.bean.InstantNoteComment;
+import travel.yj.instantnode.bean.InstantNotePicture;
 import travel.yj.instantnode.mapper.InstantNoteMapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +30,14 @@ public class InstantNoteService {
     @Autowired
     private UserInfoService userInfoService;
 
-
-    //1.添加一条朋友圈
+    /**
+     * 添加一条朋友圈
+     * @param createrId
+     * @param content
+     * @param location
+     * @param request
+     * @return
+     */
     public String  addOneInstantNote(String createrId, String content, String location, HttpServletRequest request){
         InstantNote newInstantNote=new InstantNote();
         //1.转换成InstantNote
@@ -67,9 +78,15 @@ public class InstantNoteService {
         return "朋友圈删除成功!";
     }
 
-    //3.查看我发过的朋友圈
+    /**
+     * 查看我发过的朋友圈
+     * @param myId 我的Id
+     * @return JsonArray对应的String
+     */
     public String selectMyCreateInstantNote(String myId){
-        return null;
+        List<InstantNote> listMyInstantNote = instantNoteMapper.selectByUserId(myId);
+        JsonArray jsonArray=parseListInstantNoteToJsonArray(listMyInstantNote);
+        return jsonArray.toString();
     }
 
     //4.查看我的朋友圈
@@ -85,6 +102,7 @@ public class InstantNoteService {
     public InstantNote selectOneInstantNoteById(Integer instantNoteId){
         return instantNoteMapper.selectByPrimaryKey(instantNoteId);
     }
+
 
     private InstantNote parseInstantNote(String createrId,String content,String location){
         InstantNote newInstantNote=new InstantNote();
@@ -105,5 +123,42 @@ public class InstantNoteService {
         }
         return true;
     }
+
+    private JsonArray parseListInstantNoteToJsonArray(List<InstantNote> listInstantNote){
+        JsonArray jsonArray=new JsonArray();
+        for(InstantNote instantNote:listInstantNote){
+            JsonObject instantNoteJsonObject=parseInstantNoteToJsonObject(instantNote);
+            jsonArray.add(instantNoteJsonObject);
+        }
+        return jsonArray;
+    }
+
+    private JsonObject parseInstantNoteToJsonObject(InstantNote instantNote){
+        JsonObject jsonObject=new JsonObject();
+
+        UserInfo createrUser=instantNote.getUserInfo();
+
+        String createrName=createrUser.getName();
+        String content=instantNote.getContent();
+        String location=instantNote.getLocation();
+        Integer likeNumber=instantNote.getLikeNumber();
+        //一系列评论
+        List<InstantNoteComment> listInstantNoteComment=instantNote.getListInstantNodeComment();
+        //一系列图片
+        List<InstantNotePicture> listInstantNotePicture=instantNote.getListInstantNotePicture();
+
+        JsonArray listInstantNoteCommentJsonArray=instantNoteCommentService.parseListInstantNoteCommonToJsonArray(listInstantNoteComment);
+        JsonArray listInstantNotePictureJsonArray=instantNotePictureService.parseListInstantNotePictureToJsonArray(listInstantNotePicture);
+
+        jsonObject.addProperty("createrName",createrName);
+        jsonObject.addProperty("content",content);
+        jsonObject.addProperty("location",location);
+        jsonObject.addProperty("likeNumber",likeNumber);
+        jsonObject.add("listPicture",listInstantNoteCommentJsonArray);
+        jsonObject.add("listComment",listInstantNoteCommentJsonArray);
+        return jsonObject;
+    }
+
+
 
 }

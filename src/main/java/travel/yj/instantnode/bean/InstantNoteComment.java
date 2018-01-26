@@ -29,6 +29,10 @@ public class InstantNoteComment {
 
     private Date gmtModifited;
 
+    private String replyCommentUserId;
+
+    private UserInfo replyCommentUser;
+
     public UserInfo getUserInfo() {
         return userInfo;
     }
@@ -123,5 +127,13 @@ public class InstantNoteComment {
 
     public void setReplyComment(InstantNoteComment replyComment) {
         this.replyComment = replyComment;
+    }
+
+    public String getReplyCommentUserId() {
+        return replyCommentUserId;
+    }
+
+    public UserInfo getReplyCommentUser() {
+        return replyCommentUser;
     }
 }

@@ -11,8 +11,10 @@
     <result column="is_accuse" property="isAccuse" jdbcType="BIT" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modifited" property="gmtModifited" jdbcType="TIMESTAMP" />
+    <result column="reply_comment_user_id" property="replyCommentUserId" jdbcType="VARCHAR" />
 
     <association property="userInfo" column="user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    <association property="replyCommentUser" column="reply_comment_user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
 
     <association property="replyComment" column="reply_comment_id" select="travel.yj.instantnode.mapper.InstantNoteCommentMapper.selectByPrimaryKey"></association>
 
@@ -28,11 +30,11 @@
     insert into tb_instant_note_comment (instant_note_comment_id, instant_note_id, 
       comment, like_number, user_id, 
       reply_comment_id, is_accuse, gmt_create, 
-      gmt_modifited)
+      gmt_modifited,reply_comment_user_id)
     values (#{instantNoteCommentId,jdbcType=INTEGER}, #{instantNoteId,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{likeNumber,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
       #{replyCommentId,jdbcType=INTEGER}, #{isAccuse,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModifited,jdbcType=TIMESTAMP})
+      #{gmtModifited,jdbcType=TIMESTAMP},#{replyCommentUserId,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="travel.yj.instantnode.bean.InstantNoteComment" >
     update tb_instant_note_comment
@@ -43,18 +45,19 @@
       reply_comment_id = #{replyCommentId,jdbcType=INTEGER},
       is_accuse = #{isAccuse,jdbcType=BIT},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP},
+      reply_comment_user_id=#{replyCommentUserId,jdbcType=VARCHAR}
     where instant_note_comment_id = #{instantNoteCommentId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select instant_note_comment_id, instant_note_id, comment, like_number, user_id, reply_comment_id, 
-    is_accuse, gmt_create, gmt_modifited
+    is_accuse, gmt_create, gmt_modifited,reply_comment_user_id
     from tb_instant_note_comment
     where instant_note_comment_id = #{instantNoteCommentId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select instant_note_comment_id, instant_note_id, comment, like_number, user_id, reply_comment_id, 
-    is_accuse, gmt_create, gmt_modifited
+    is_accuse, gmt_create, gmt_modifited,reply_comment_user_id
     from tb_instant_note_comment
   </select>
 </mapper>

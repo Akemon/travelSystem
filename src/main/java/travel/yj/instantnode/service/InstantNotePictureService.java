@@ -1,6 +1,8 @@
 package travel.yj.instantnode.service;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -132,6 +134,24 @@ public class InstantNotePictureService {
             throw new IllegalArgumentException("朋友圈照片删除失败");
         }
         return isDelete;
+    }
+
+    public JsonArray parseListInstantNotePictureToJsonArray(List<InstantNotePicture> listInstantNotePicture){
+        JsonArray jsonArray=new JsonArray();
+        for (InstantNotePicture picture:listInstantNotePicture) {
+                JsonObject onePictureJsonoObject=parseInstantNotePictureToJsonObject(picture);
+                jsonArray.add(onePictureJsonoObject);
+        }
+        return jsonArray;
+    }
+
+    private JsonObject parseInstantNotePictureToJsonObject(InstantNotePicture picture){
+        JsonObject jsonObject=new JsonObject();
+        Integer instantNotePictureId=picture.getInstantNotePictureId();
+        String picturePath=picture.getPicturePath();
+        jsonObject.addProperty("instantNotePictureId",instantNotePictureId);
+        jsonObject.addProperty("picturePath",picturePath);
+        return jsonObject;
     }
 
 
