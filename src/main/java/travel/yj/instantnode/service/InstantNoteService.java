@@ -47,8 +47,10 @@ public class InstantNoteService {
 
         //4.插入对应的图片,无论有没有新增图片,都要调用，对应的方法会进行判断
         Integer instantNoteId=instantNote.getInstantNoteId();
+        if(instantNoteId==null){
+            throw new IllegalArgumentException("Id为空！");
+        }
         instantNotePictureService.addListInstantNotePicture(instantNoteId,listUploadFile);
-
         return "内容发布成功!";
     }
 
