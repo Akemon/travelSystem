@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.service.UserInfoService;
 import travel.yj.instantnode.bean.InstantNote;
@@ -30,15 +31,8 @@ public class InstantNoteService {
     @Autowired
     private UserInfoService userInfoService;
 
-    /**
-     * 添加一条朋友圈
-     * @param createrId
-     * @param content
-     * @param location
-     * @param request
-     * @return
-     */
-    public String  addOneInstantNote(String createrId, String content, String location, HttpServletRequest request){
+
+    public String  addOneInstantNote(String createrId, String content, String location,List<MultipartFile> listUploadFile){
         InstantNote newInstantNote=new InstantNote();
         //1.转换成InstantNote
         InstantNote instantNote=parseInstantNote(createrId,content,location);
@@ -53,7 +47,7 @@ public class InstantNoteService {
 
         //4.插入对应的图片,无论有没有新增图片,都要调用，对应的方法会进行判断
         Integer instantNoteId=instantNote.getInstantNoteId();
-        instantNotePictureService.addListInstantNotePicture(instantNoteId,request);
+        instantNotePictureService.addListInstantNotePicture(instantNoteId,listUploadFile);
 
         return "内容发布成功!";
     }
@@ -77,6 +71,7 @@ public class InstantNoteService {
         instantNotePictureService.deleteListInstantNotePictureInFileSystem(listDeletePicturePath);
         return "朋友圈删除成功!";
     }
+
 
     /**
      * 查看我发过的朋友圈

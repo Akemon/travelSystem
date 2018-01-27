@@ -70,50 +70,43 @@ public class InstantNotePictureService {
         return true;
     }
 
-    /**
-     * 添加朋友圈相片
-     * @param instantNoteId 朋友圈内容Id
-     * @param request 包含图片（或者不包含图片）的request
-     * @return true or false
-     */
-    public String addListInstantNotePicture(Integer instantNoteId,HttpServletRequest request){
-        //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
-        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
-                request.getSession().getServletContext());
+
+    public String addListInstantNotePicture(Integer instantNoteId,List<MultipartFile> listUploadFile){
+        if(listUploadFile==null||listUploadFile.size()==0){
+            return "";
+        }
+        for(MultipartFile oneUploadFile:listUploadFile){
+            //存储路径:D:\\travelSystem\\instantNote\\picture\\instantNoteId\\图片名称
+            String relativePath=instantNoteId+File.separator+oneUploadFile.getName();
+            //1.将图片信息插入数据库中
+            insertIntoDB(instantNoteId,relativePath);
+            //2.将文件插入文件系统中
+            addOnePictureToFileSystem(oneUploadFile,instantNoteId);
+        }
+
+        return "照片添加成功!";
+    }
+
+    private void addOnePictureToFileSystem(MultipartFile uploadFile,Integer instantNoteId){
         String basePath= InstantNoteFileUtil.getInstantNotePictureBasePath();
-        //检查form中是否有enctype="multipart/form-data"
-        if(multipartResolver.isMultipart(request)){
-            //将request变成多部分request
-            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-
-            //获取multiRequest 中所有的文件名
-            Iterator iter=multiRequest.getFileNames();
-            while(iter.hasNext())
-            {
-                //一次遍历所有文件
-                MultipartFile file=multiRequest.getFile(iter.next().toString());
-                if(file!=null)
-                {
-                    //存储路径:D:\travelSystem\instantNote\picture\朋友圈Id\文件名
-                    //relativePath 相对路径
-                    String relativePath=instantNoteId+File.separator+file.getOriginalFilename();
-
-                    //插入数据库
-                    insertIntoDB(instantNoteId,relativePath);
-
-                    //上传至文件系统
-                    try {
-                        file.transferTo(new File(basePath,relativePath));
-                    }catch (IOException e){
-                        e.printStackTrace();
-                        throw new IllegalArgumentException("服务器错误!储存照片至文件系统出错!",e);
-                    }
-
-
-                }
+        //先判断存放的图片的文件夹是否存在，如果不存在,则创建
+        File saveDirectory=new File(basePath,instantNoteId+"");
+        if(!saveDirectory.exists()){
+            boolean isCreate=saveDirectory.mkdirs();
+            if(!isCreate){
+                throw new IllegalArgumentException("存储图片的文件夹创建失败!");
             }
         }
-        return "照片添加成功!";
+
+        //保存图片
+        String relativePath=instantNoteId+File.separator+uploadFile.getName();
+        File destinationFile=new File(basePath,relativePath);
+        try {
+            uploadFile.transferTo(destinationFile);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException("照片上传失败!");
+        }
     }
 
     private void insertIntoDB(Integer instantNoteId,String relativePath){
