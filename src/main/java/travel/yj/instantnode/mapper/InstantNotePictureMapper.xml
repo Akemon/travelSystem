@@ -13,10 +13,7 @@
     delete from tb_instant_note_picture
     where instant_note_picture_id = #{instantNotePictureId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNotePicture" >
-    <selectKey resultType="java.lang.Integer" keyProperty="instantNotePictureId" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNotePicture" useGeneratedKeys="true" keyProperty="instantNotePictureId">
     insert into tb_instant_note_picture (instant_note_picture_id, instant_note_id, 
       picture_path)
     values (#{instantNotePictureId,jdbcType=INTEGER}, #{instantNoteId,jdbcType=INTEGER}, 

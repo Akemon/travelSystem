@@ -41,7 +41,7 @@ public class InstantNoteServiceTest {
 
         List<MultipartFile> listFile=new ArrayList<MultipartFile>();
         MultipartFile file1=parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
-        MultipartFile file2=parseFileToMockMultipartFile(new File("D:\\0_test\\zx.jpg"));
+        MultipartFile file2=parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
         MultipartFile file3=parseFileToMockMultipartFile(new File("D:\\0_test\\zz.jpg"));
         listFile.add(file1);
         listFile.add(file2);

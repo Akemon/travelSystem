@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
@@ -76,18 +77,18 @@ public class InstantNotePictureService {
             return "";
         }
         for(MultipartFile oneUploadFile:listUploadFile){
-            //存储路径:D:\\travelSystem\\instantNote\\picture\\instantNoteId\\图片名称
-            String relativePath=instantNoteId+File.separator+oneUploadFile.getName();
+            //存储路径:D:\\travelSystem\\instantNote\\picture\\instantNoteId\\UUId_图片名称
+            String relativePath=getRelativePath(oneUploadFile,instantNoteId);
             //1.将图片信息插入数据库中
-            insertIntoDB(instantNoteId,relativePath);
+            InstantNotePicture instantNotePicture=insertIntoDB(instantNoteId,relativePath);
             //2.将文件插入文件系统中
-            addOnePictureToFileSystem(oneUploadFile,instantNoteId);
+            addOnePictureToFileSystem(oneUploadFile,instantNotePicture.getPicturePath(),instantNoteId);
         }
 
         return "照片添加成功!";
     }
 
-    private void addOnePictureToFileSystem(MultipartFile uploadFile,Integer instantNoteId){
+    private void addOnePictureToFileSystem(MultipartFile uploadFile,String relativePicturePath,Integer instantNoteId){
         String basePath= InstantNoteFileUtil.getInstantNotePictureBasePath();
         //先判断存放的图片的文件夹是否存在，如果不存在,则创建
         File saveDirectory=new File(basePath,instantNoteId+"");
@@ -99,8 +100,8 @@ public class InstantNotePictureService {
         }
 
         //保存图片
-        String relativePath=instantNoteId+File.separator+uploadFile.getName();
-        File destinationFile=new File(basePath,relativePath);
+        //生成存储路径
+        File destinationFile=new File(basePath,relativePicturePath);
         try {
             uploadFile.transferTo(destinationFile);
         }catch (Exception e){
@@ -109,11 +110,12 @@ public class InstantNotePictureService {
         }
     }
 
-    private void insertIntoDB(Integer instantNoteId,String relativePath){
+    private InstantNotePicture insertIntoDB(Integer instantNoteId,String relativePath){
         InstantNotePicture instantNotePicture=new InstantNotePicture();
         instantNotePicture.setInstantNoteId(instantNoteId);
         instantNotePicture.setPicturePath(relativePath);
         instantNotePictureMapper.insert(instantNotePicture);
+        return instantNotePicture;
     }
 
     private boolean deleteOneInstantNotePicture(String absoluteNotePicturePath){
@@ -147,6 +149,11 @@ public class InstantNotePictureService {
         return jsonObject;
     }
 
+    private String getRelativePath(MultipartFile file,Integer instantNoteId){
+        String fileName=file.getName();
+        String uuid= UUID.randomUUID().toString();
+        return instantNoteId+File.separator+uuid+"_"+fileName;
+    }
 
 
 }
