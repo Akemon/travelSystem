@@ -59,6 +59,12 @@ public class InstantNoteServiceTest {
         assertEquals(true,result.indexOf("成功")>=0);
     }
 
+    @Test
+    public void testDeleteOneInstantNote(){
+        String result=instantNoteService.deleteOneInstantNote(7);
+        assertEquals(true,result.indexOf("成功")>=0);
+    }
+
     private static MultipartFile parseFileToMockMultipartFile(File file){
         try {
             MultipartFile multipartFile = new MockMultipartFile(file.getName(), new FileInputStream(file));

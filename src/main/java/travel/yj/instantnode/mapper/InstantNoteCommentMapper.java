@@ -76,7 +76,8 @@ public interface InstantNoteCommentMapper {
     /**
      * 根据朋友圈id删除对应的朋友圈评论
      * @param instantNoteId 朋友圈id
+     * @return 删除的朋友圈评论数目
      */
-    @Delete(value = "delete * from tb_instant_note_comment where instant_note_id=#{instantNoteId}")
-    void deleteListInstantNoteCommentByInstantNoteId(Integer instantNoteId);
+    @Delete(value = "delete  from tb_instant_note_comment where instant_note_id=#{instantNoteId}")
+    int deleteListInstantNoteCommentByInstantNoteId(Integer instantNoteId);
 }

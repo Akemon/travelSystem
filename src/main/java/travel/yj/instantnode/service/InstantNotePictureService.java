@@ -63,7 +63,7 @@ public class InstantNotePictureService {
     }
 
     public boolean deleteListInstantNotePictureInFileSystem(List<String> listAbsoluteNotePicturePath){
-        if(listAbsoluteNotePicturePath.size()==0){
+        if(listAbsoluteNotePicturePath==null||listAbsoluteNotePicturePath.size()==0){
             return true;
         }
         //删除文件系统的朋友圈照片
