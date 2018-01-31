@@ -16,8 +16,17 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)//表示整合JUnit4进行测试
-@ContextConfiguration(locations={"classpath:applicationContext.xml"})//加载spring配置文件
+/**
+ * 表示整合JUnit4进行测试
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+/**
+ * 加载spring配置文件
+ */
+@ContextConfiguration(locations={"classpath:applicationContext.xml"})
+/**
+ * @author 杨景
+ */
 public class InstantNoteServiceTest {
 
     @Autowired

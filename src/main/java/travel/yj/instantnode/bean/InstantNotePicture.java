@@ -1,11 +1,16 @@
 package travel.yj.instantnode.bean;
-
+/**
+ * @author 杨景
+ */
 public class InstantNotePicture {
     private Integer instantNotePictureId;
 
     private Integer instantNoteId;
 
-    private InstantNote instantNote;//朋友圈内容
+    /**
+     * 朋友圈内容
+     */
+    private InstantNote instantNote;
 
     private String picturePath;
 

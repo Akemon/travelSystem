@@ -3,6 +3,9 @@ package travel.yj.instantnode.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author 杨景
+ */
 public class DateUtil {
 
     private DateUtil (){}

@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-
+/**
+ * @author 杨景
+ */
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
 public class InstantNotePictureService {
@@ -33,7 +35,6 @@ public class InstantNotePictureService {
     private InstantNoteService instantNoteService;
 
 
-    //查找朋友圈的相片
     public List<InstantNotePicture> listInstantNotePictureByInstantNoteId(Integer instantNoteId){
             return null;
     }
@@ -54,7 +55,8 @@ public class InstantNotePictureService {
         List<InstantNotePicture> listInstantNotePicture=instantNote.getListInstantNotePicture();
         //2.删除照片
         for(InstantNotePicture picture:listInstantNotePicture){
-            listPicturePath.add(picture.getPicturePath());//记录文件路径
+            //记录文件路径
+            listPicturePath.add(picture.getPicturePath());
             instantNotePictureMapper.deleteByPrimaryKey(picture.getInstantNotePictureId());
         }
         return listPicturePath;

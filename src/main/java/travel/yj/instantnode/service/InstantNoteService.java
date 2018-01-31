@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author 杨景
+ */
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
 public class InstantNoteService {
@@ -86,7 +89,6 @@ public class InstantNoteService {
         return jsonArray.toString();
     }
 
-    //4.查看我的朋友圈
     public String selectMyInstantNote(String myId){
         return null;
     }

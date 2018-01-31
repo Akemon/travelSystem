@@ -4,12 +4,18 @@ import travel.hk.userinfo.bean.UserInfo;
 
 import java.util.Date;
 
+/**
+ * @author 杨景
+ */
 public class InstantNoteComment {
     private Integer instantNoteCommentId;
 
     private Integer instantNoteId;
 
-    private InstantNote instantNote;//评论的朋友圈
+    /**
+     *   评论的朋友圈
+     */
+    private InstantNote instantNote;
 
     private String comment;
 
@@ -17,11 +23,17 @@ public class InstantNoteComment {
 
     private String userId;
 
-    private UserInfo userInfo;//用户信息
+    /**
+     * 用户信息
+     */
+    private UserInfo userInfo;
 
     private Integer replyCommentId;
 
-    private InstantNoteComment replyComment;//回复的评论
+    /**
+     * 回复的评论
+     */
+    private InstantNoteComment replyComment;
 
     private Boolean isAccuse;
 

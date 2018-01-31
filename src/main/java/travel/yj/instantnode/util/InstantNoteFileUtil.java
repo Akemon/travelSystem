@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * @author 杨景
+ */
 public class InstantNoteFileUtil {
 
     private InstantNoteFileUtil() {}

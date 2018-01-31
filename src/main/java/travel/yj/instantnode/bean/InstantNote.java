@@ -4,13 +4,18 @@ import travel.hk.userinfo.bean.UserInfo;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * @author 杨景
+ */
 public class InstantNote {
     private Integer instantNoteId;
 
     private String userId;
 
-    private UserInfo userInfo;//用户信息
+    /**
+     * 用户信息
+     */
+    private UserInfo userInfo;
 
     private String content;
 
@@ -24,9 +29,15 @@ public class InstantNote {
 
     private Date gmtModifited;
 
-    private List<InstantNotePicture> listInstantNotePicture;//朋友圈对应的图片
+    /**
+     * 朋友圈对应的图片
+     */
+    private List<InstantNotePicture> listInstantNotePicture;
 
-    private List<InstantNoteComment> listInstantNodeComment;//朋友圈对应的评论
+    /**
+     * 朋友圈对应的评论
+     */
+    private List<InstantNoteComment> listInstantNodeComment;
 
     public List<InstantNoteComment> getListInstantNodeComment() {
         return listInstantNodeComment;
