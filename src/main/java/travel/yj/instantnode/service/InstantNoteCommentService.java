@@ -27,8 +27,24 @@ public class InstantNoteCommentService {
     @Autowired
     private InstantNoteCommentMapper instantNoteCommentMapper;
 
-    public String addInstantNoteComment(){
-        return null;
+    /**
+     * 新增评论
+     * @param instantNoteId 被评论的朋友圈Id
+     * @param createrId 评论创建者Id
+     * @param replyUserId 被回复的评论的创建者Id
+     * @param content 评论内容
+     * @return 添加评论的结果
+     */
+    public String addInstantNoteComment(Integer instantNoteId,String createrId,String replyUserId,String content){
+        //1.转换成对应的InstantNoteComment
+        InstantNoteComment instantNoteComment=parseToInstantNoteComment(instantNoteId,createrId,replyUserId,content);
+        //2.校验参数
+        if(!checkNewParams(instantNoteComment)){
+            return "Error";
+        }
+        //3.插入数据库
+        instantNoteCommentMapper.insert(instantNoteComment);
+        return "发布评论成功!";
     }
 
     /**
@@ -40,6 +56,16 @@ public class InstantNoteCommentService {
         //1.删除instantNoteId 对应的所有留言
         instantNoteCommentMapper.deleteListInstantNoteCommentByInstantNoteId(instantNoteId);
         return "删除成功!";
+    }
+
+    /**
+     * 根据Id删除对应的朋友圈评论
+     * @param instantNoteCommentId 朋友圈评论Id
+     * @return 删除结果
+     */
+    public String deleteOneInstantNoteCommentById(Integer instantNoteCommentId){
+        instantNoteCommentMapper.deleteByPrimaryKey(instantNoteCommentId);
+        return "评论删除成功!";
     }
 
 
@@ -80,6 +106,30 @@ public class InstantNoteCommentService {
 
         jsonObject.addProperty("createTime", DateUtil.formatDate(createTime));
         return jsonObject;
+    }
+
+    private InstantNoteComment parseToInstantNoteComment(Integer instantNoteId,String createrId,String replyUserId,String content){
+        InstantNoteComment instantNoteComment=new InstantNoteComment();
+        instantNoteComment.setComment(content);
+        instantNoteComment.setGmtCreate(new Date());
+        instantNoteComment.setGmtModifited(new Date());
+        instantNoteComment.setInstantNoteId(instantNoteId);
+        instantNoteComment.setIsAccuse(false);
+        instantNoteComment.setLikeNumber(0);
+        instantNoteComment.setUserId(createrId);
+        instantNoteComment.setReplyCommentUserId(replyUserId);
+        return instantNoteComment;
+    }
+
+    private boolean checkNewParams(InstantNoteComment instantNoteComment){
+        String content=instantNoteComment.getComment();
+        Integer instantNoteId=instantNoteComment.getInstantNoteId();
+        String createrId=instantNoteComment.getUserId();
+        String replyUserId=instantNoteComment.getReplyCommentUserId();
+        if(content==null||content.trim().length()==0){
+            throw new IllegalArgumentException("评论内容不能为空!");
+        }
+        return true;
     }
 
 }

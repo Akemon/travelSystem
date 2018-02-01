@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.yj.followlist.mapper.FollowPeopleListMapper">
+  <resultMap id="BaseResultMap" type="travel.yj.followlist.bean.FollowPeopleList">
+    <id column="follow_people_list_id" jdbcType="INTEGER" property="followPeopleListId" />
+    <result column="host_user_id" jdbcType="VARCHAR" property="hostUserId" />
+    <result column="follow_user_id" jdbcType="VARCHAR" property="followUserId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifited" jdbcType="TIMESTAMP" property="gmtModifited" />
+
+    <association property="hostUser" column="host_user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    <association property="followUser" column="follow_user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_follow_people_list
+    where follow_people_list_id = #{followPeopleListId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="travel.yj.followlist.bean.FollowPeopleList">
+    insert into tb_follow_people_list (follow_people_list_id, host_user_id, follow_user_id, 
+      gmt_create, gmt_modifited)
+    values (#{followPeopleListId,jdbcType=INTEGER}, #{hostUserId,jdbcType=VARCHAR}, #{followUserId,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="travel.yj.followlist.bean.FollowPeopleList">
+    update tb_follow_people_list
+    set host_user_id = #{hostUserId,jdbcType=VARCHAR},
+      follow_user_id = #{followUserId,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+    where follow_people_list_id = #{followPeopleListId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select follow_people_list_id, host_user_id, follow_user_id, gmt_create, gmt_modifited
+    from tb_follow_people_list
+    where follow_people_list_id = #{followPeopleListId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select follow_people_list_id, host_user_id, follow_user_id, gmt_create, gmt_modifited
+    from tb_follow_people_list
+  </select>
+</mapper>

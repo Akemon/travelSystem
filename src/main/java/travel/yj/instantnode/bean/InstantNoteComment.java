@@ -148,4 +148,12 @@ public class InstantNoteComment {
     public UserInfo getReplyCommentUser() {
         return replyCommentUser;
     }
+
+    public void setReplyCommentUserId(String replyCommentUserId) {
+        this.replyCommentUserId = replyCommentUserId;
+    }
+
+    public void setReplyCommentUser(UserInfo replyCommentUser) {
+        this.replyCommentUser = replyCommentUser;
+    }
 }
