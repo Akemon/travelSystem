@@ -4,13 +4,18 @@ import travel.hk.userinfo.bean.UserInfo;
 
 import java.util.Date;
 
+/**
+ * @author 杨景
+ */
 public class FollowPeopleList {
     private Integer followPeopleListId;
 
+    /**被关注者Id*/
     private String hostUserId;
 
     private UserInfo hostUser;
 
+    /**主动关注者Id*/
     private String followUserId;
 
     private UserInfo followUser;

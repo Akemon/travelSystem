@@ -16,7 +16,7 @@
     delete from tb_follow_people_list
     where follow_people_list_id = #{followPeopleListId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="travel.yj.followlist.bean.FollowPeopleList">
+  <insert id="insert" parameterType="travel.yj.followlist.bean.FollowPeopleList" useGeneratedKeys="true" keyProperty="followPeopleListId">
     insert into tb_follow_people_list (follow_people_list_id, host_user_id, follow_user_id, 
       gmt_create, gmt_modifited)
     values (#{followPeopleListId,jdbcType=INTEGER}, #{hostUserId,jdbcType=VARCHAR}, #{followUserId,jdbcType=VARCHAR}, 
