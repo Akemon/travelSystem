@@ -82,6 +82,18 @@ public class FollowPeopleListService {
         return jsonArray.toString();
     }
 
+    /**
+     * 获取关注我的用户列表
+     * @param followUserId 我的用户Id
+     * @return 关注我的用户列表的Json字符串
+     */
+    public String selectMyFollowUser(String followUserId){
+        List<FollowPeopleList> list=followPeopleListMapper.selectByFollowUserId(followUserId);
+        JsonArray jsonArray=parseListFollowPeopleListToJsonArray(list);
+        return jsonArray.toString();
+    }
+
+
     private FollowPeopleList parseToFollowPeopleList(String hostUserId,String followUserId){
         FollowPeopleList followPeopleList=new FollowPeopleList();
         followPeopleList.setFollowUserId(followUserId);
@@ -103,11 +115,13 @@ public class FollowPeopleListService {
             UserInfo followUserInfo=followPeople.getFollowUser();
             String followUserName=followUserInfo.getName();
             String followUserId=followUserInfo.getUserId();
+            Integer followPeopleId=followPeople.getFollowPeopleListId();
 
             jsonObject.addProperty("hostUserName",hostUserName);
             jsonObject.addProperty("hostUserId",hostUserId);
             jsonObject.addProperty("followUserName",followUserName);
             jsonObject.addProperty("followUserId",followUserId);
+            jsonObject.addProperty("followPeopleListId",followPeopleId);
             jsonArray.add(jsonObject);
         }
         return jsonArray;

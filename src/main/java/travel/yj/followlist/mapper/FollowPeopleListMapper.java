@@ -61,6 +61,7 @@ public interface FollowPeopleListMapper {
     @Select({"select * from tb_follow_people_list where host_user_id=#{hostUserId}"})
     @ResultMap("BaseResultMap")
     List<FollowPeopleList> selectByHostUserId(@Param("hostUserId") String hostUserId);
+
     /**
      * 根据followUserId获取关注信息
      * @param followUserId 关注被关注者的Id
