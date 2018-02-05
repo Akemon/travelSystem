@@ -21,7 +21,7 @@ public class InstantNoteCommentServiceTest {
 
     @Test
     public void testAddInstantNoteComment(){
-          String result=  instantNoteCommentService.addInstantNoteComment(9,"826299017","23456","");
+          String result=  instantNoteCommentService.addInstantNoteComment(9,"826299017","dsf","我来回复你了!!!");
           assertEquals(true,result.indexOf("成功")>=0);
     }
 

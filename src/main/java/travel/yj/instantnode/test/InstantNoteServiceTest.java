@@ -28,8 +28,8 @@ public class InstantNoteServiceTest {
 
     @Test
     public void testAddOneInstantNoteWithoutPicture(){
-        String createrId="826299017";
-        String content="今天是2018/1/27很开心";
+        String createrId="dsf";
+        String content="我就是要发东西测试一下";
         String location="深职院";
         List<MultipartFile> listFile=null;
         String result=instantNoteService.addOneInstantNote(createrId,content,location,listFile);
@@ -57,6 +57,12 @@ public class InstantNoteServiceTest {
     public void testDeleteOneInstantNote(){
         String result=instantNoteService.deleteOneInstantNote(7);
         assertEquals(true,result.indexOf("成功")>=0);
+    }
+
+    @Test
+    public void testSelectMyInstantNote(){
+        String result=instantNoteService.selectMyInstantNote("826299017");
+        System.out.println(result);
     }
 
     private static MultipartFile parseFileToMockMultipartFile(File file){

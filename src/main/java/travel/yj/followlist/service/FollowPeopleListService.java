@@ -10,6 +10,7 @@ import travel.hk.userinfo.bean.UserInfo;
 import travel.yj.followlist.bean.FollowPeopleList;
 import travel.yj.followlist.mapper.FollowPeopleListMapper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,23 @@ public class FollowPeopleListService {
         List<FollowPeopleList> list=followPeopleListMapper.selectByFollowUserId(followUserId);
         JsonArray jsonArray=parseListFollowPeopleListToJsonArray(list);
         return jsonArray.toString();
+    }
+
+
+    /**
+     * 获取我关注的 用户Id
+     * @param followUserId 我的用户Id
+     * @return
+     */
+    public List<String> selectListMyFollowUserId(String followUserId){
+        List<FollowPeopleList> listFollowPeopleList=followPeopleListMapper.selectByFollowUserId(followUserId);
+        //我关注的用户Id列表
+        List<String> listMyFollowUserId=new ArrayList<String>();
+        for(FollowPeopleList oneFollowPeople:listFollowPeopleList){
+            String userId=oneFollowPeople.getHostUserId();
+            listMyFollowUserId.add(userId);
+        }
+        return listMyFollowUserId;
     }
 
 

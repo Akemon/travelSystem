@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.service.UserInfoService;
+import travel.yj.followlist.service.FollowPeopleListService;
 import travel.yj.instantnode.bean.InstantNote;
 import travel.yj.instantnode.bean.InstantNoteComment;
 import travel.yj.instantnode.bean.InstantNotePicture;
@@ -33,6 +34,8 @@ public class InstantNoteService {
     private InstantNoteCommentService instantNoteCommentService;
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private FollowPeopleListService followPeopleListService;
 
 
     public String  addOneInstantNote(String createrId, String content, String location,List<MultipartFile> listUploadFile){
@@ -89,9 +92,36 @@ public class InstantNoteService {
         return jsonArray.toString();
     }
 
-    public String selectMyInstantNote(String myId){
-        return null;
+    /**
+     * 获取我发送的朋友圈
+     * @param myId 我的Id
+     * @return 我的发送的所有朋友圈List<InstantNote> 对应的JsonArray String
+     */
+    public String selectMyAllInstantNote(String myId){
+        List<InstantNote> listInstantNode=instantNoteMapper.selectByUserId(myId);
+        JsonArray jsonArray=parseListInstantNoteToJsonArray(listInstantNode);
+        return jsonArray.toString();
     }
+
+    /**
+     * 获取我的朋友圈
+     * @param myId 我的Id
+     * @return 我的朋友圈对应的List<InstantNote> 对应的JsonArray String
+     */
+    public String selectMyInstantNote(String myId){
+        //1.获取我的关注的用户列表
+        List<String> listMyFollowUserId=followPeopleListService.selectListMyFollowUserId(myId);
+        //2.添加我的账号进入列表
+        listMyFollowUserId.add(myId);
+        //3.构造参数
+        String sqlParams=createSqlParams(listMyFollowUserId);
+        List<InstantNote> listInstantNote=instantNoteMapper.selectMyInstantNote(sqlParams);
+        //4.获取对应的JsonArray
+        JsonArray jsonArray=parseListInstantNoteToJsonArray(listInstantNote);
+        return jsonArray.toString();
+    }
+
+
 
     /**
      * 根据instantNoteId获取对应的InstantNote
@@ -156,6 +186,22 @@ public class InstantNoteService {
         jsonObject.add("listPicture",listInstantNoteCommentJsonArray);
         jsonObject.add("listComment",listInstantNoteCommentJsonArray);
         return jsonObject;
+    }
+
+    private String createSqlParams(List<String> listId){
+        StringBuilder sb=new StringBuilder();
+        int count=1;
+        int size=listId.size();
+        for(String id:listId){
+            sb.append("'");
+            sb.append(id);
+            sb.append("'");
+            if(count!=size){
+                sb.append(",");
+            }
+            count++;
+        }
+        return sb.toString();
     }
 
 

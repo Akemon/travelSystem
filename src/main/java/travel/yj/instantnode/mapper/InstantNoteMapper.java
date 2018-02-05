@@ -49,13 +49,23 @@ public interface InstantNoteMapper {
 
 
     /**
-     * 根据用户Id获取对应的朋友圈内容列表
+     * 根据用户Id获取他自己发送的朋友圈内容列表
      * @param userId 用户Id
      * @return 朋友圈内容列表
      */
     @Select({"select * from tb_instant_note where user_id =#{userId}"})
     @ResultMap("BaseResultMap")
     List<InstantNote> selectByUserId(@Param("userId") String userId);
+
+
+    /**
+     * 筛选出我的朋友圈列表
+     * @param ids 我关注用户Id列表 如: '1','2','3'
+     * @return 对应的朋友圈列表
+     */
+    @Select({"select * from tb_instant_note where user_id in(${ids}) order by gmt_create desc"})
+    @ResultMap("BaseResultMap")
+    List<InstantNote> selectMyInstantNote(@Param("ids") String ids);
 
 
 }
