@@ -92,16 +92,6 @@ public class InstantNoteService {
         return jsonArray.toString();
     }
 
-    /**
-     * 获取我发送的朋友圈
-     * @param myId 我的Id
-     * @return 我的发送的所有朋友圈List<InstantNote> 对应的JsonArray String
-     */
-    public String selectMyAllInstantNote(String myId){
-        List<InstantNote> listInstantNode=instantNoteMapper.selectByUserId(myId);
-        JsonArray jsonArray=parseListInstantNoteToJsonArray(listInstantNode);
-        return jsonArray.toString();
-    }
 
     /**
      * 获取我的朋友圈
@@ -183,7 +173,7 @@ public class InstantNoteService {
         jsonObject.addProperty("content",content);
         jsonObject.addProperty("location",location);
         jsonObject.addProperty("likeNumber",likeNumber);
-        jsonObject.add("listPicture",listInstantNoteCommentJsonArray);
+        jsonObject.add("listPicture",listInstantNotePictureJsonArray);
         jsonObject.add("listComment",listInstantNoteCommentJsonArray);
         return jsonObject;
     }

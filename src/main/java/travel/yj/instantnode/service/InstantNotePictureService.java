@@ -4,6 +4,10 @@ package travel.yj.instantnode.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +21,9 @@ import travel.yj.instantnode.util.InstantNoteFileUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,12 +40,6 @@ public class InstantNotePictureService {
     @Autowired
     private InstantNoteService instantNoteService;
 
-
-    public List<InstantNotePicture> listInstantNotePictureByInstantNoteId(Integer instantNoteId){
-            return null;
-    }
-
-    //删除朋友圈的图片
 
     /**
      * 删除instantNoteId 删除对应的朋友圈的照片(方法会判断是否存在照片)
@@ -88,6 +88,66 @@ public class InstantNotePictureService {
         }
 
         return "照片添加成功!";
+    }
+
+
+
+    public ResponseEntity<byte[]> downloadPicture(Integer instantNotePictureId){
+        InstantNotePicture instantNotePicture=instantNotePictureMapper.selectByPrimaryKey(instantNotePictureId);
+        //1.获取文件
+        File downloadPicture=getDownloadPicture(instantNotePicture);
+        //2.获取ResponseBody数组
+        byte[] body=getDownloadFileResponseBodyBody(downloadPicture);
+        //3.获取HttpHeaders
+        HttpHeaders headers=getDownloadFileHttpHeaders(instantNotePicture.getInstantNotePictureId()+"图片");
+        //4.构建ResponseEntity<byte>
+        ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, HttpStatus.OK);
+        return entity;
+    }
+
+    private File getDownloadPicture(InstantNotePicture instantNotePicture){
+        String basePath=InstantNoteFileUtil.getInstantNotePictureBasePath();
+        String picturePath=instantNotePicture.getPicturePath();
+        File downloadFile=new File(basePath, picturePath);
+        return downloadFile;
+    }
+
+    /**
+     * 获取文件的body数组[byte数组类型]
+     * @param downloadFile
+     * @return byte[]
+     * @throws IllegalArgumentException
+     */
+    private byte[] getDownloadFileResponseBodyBody(File downloadFile){
+        byte[] body = null;
+        try{
+            InputStream is = new FileInputStream(downloadFile);
+            body = new byte[is.available()];
+            is.read(body);
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException("下载出现异常!"+e.getMessage());
+        }
+        return body;
+    }
+
+    /**
+     * 获取文件下载头
+     * @param downloadPictureName 需要下载的文件的名字
+     * @return
+     */
+    private HttpHeaders getDownloadFileHttpHeaders(String downloadPictureName){
+        HttpHeaders headers = new HttpHeaders();
+        try{
+            headers.add("Content-Disposition",
+                    "attchement;filename=" + new String(downloadPictureName.getBytes("UTF-8"), "ISO-8859-1").replaceAll(" ", ""));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException("下载出现异常!"+e.getMessage());
+        }
+        return headers;
     }
 
     private void addOnePictureToFileSystem(MultipartFile uploadFile,String relativePicturePath,Integer instantNoteId){
