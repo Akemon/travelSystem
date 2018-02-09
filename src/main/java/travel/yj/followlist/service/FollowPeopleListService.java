@@ -30,7 +30,7 @@ public class FollowPeopleListService {
      * @param followUserId 主动关注他人的id
      * @return 关注结果
      */
-    public String folowSomeone(String hostUserId,String followUserId){
+    public String followSomeone(String hostUserId, String followUserId){
         //1.确定是否已经关注
         FollowPeopleList followPeopleList=followPeopleListMapper.selectByHostUserIdAndFollowUserId(hostUserId,followUserId);
         if(followPeopleList!=null){

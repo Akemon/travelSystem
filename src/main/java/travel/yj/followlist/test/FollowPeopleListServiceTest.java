@@ -21,7 +21,7 @@ public class FollowPeopleListServiceTest {
 
     @Test
     public void testFolowSomeone(){
-        String result=followPeopleListService.folowSomeone("dsf","826299017");
+        String result=followPeopleListService.followSomeone("dsf","826299017");
         assertEquals(true,result.indexOf("成功")>=0);
     }
 
