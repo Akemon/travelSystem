@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.yj.instantnode.mapper.InstantNoteLikePeopleMapper">
+  <resultMap id="BaseResultMap" type="travel.yj.instantnode.bean.InstantNoteLikePeople">
+    <id column="instant_note_id" jdbcType="INTEGER" property="instantNoteId" />
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <association property="userInfo" column="user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    <association property="instantNote" column="instant_note_id" select="travel.yj.instantnode.mapper.InstantNoteMapper.selectByPrimaryKey"></association>
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from tb_instant_note_like_people
+    where instant_note_id = #{instantNoteId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="travel.yj.instantnode.bean.InstantNoteLikePeople">
+    insert into tb_instant_note_like_people (instant_note_id, user_id, gmt_create, 
+      gmt_modified)
+    values (#{instantNoteId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="travel.yj.instantnode.bean.InstantNoteLikePeople">
+    update tb_instant_note_like_people
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where instant_note_id = #{instantNoteId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select instant_note_id, user_id, gmt_create, gmt_modified
+    from tb_instant_note_like_people
+    where instant_note_id = #{instantNoteId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select instant_note_id, user_id, gmt_create, gmt_modified
+    from tb_instant_note_like_people
+  </select>
+</mapper>

@@ -61,7 +61,7 @@ public class InstantNoteServiceTest {
 
     @Test
     public void testSelectMyInstantNote(){
-        String result=instantNoteService.selectMyInstantNote("826299017");
+        String result=instantNoteService.selectMyInstantNote("dsf");
         System.out.println(result);
     }
 

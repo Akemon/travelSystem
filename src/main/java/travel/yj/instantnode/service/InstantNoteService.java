@@ -36,6 +36,8 @@ public class InstantNoteService {
     private UserInfoService userInfoService;
     @Autowired
     private FollowPeopleListService followPeopleListService;
+    @Autowired
+    private InstantNoteLikePeopleService instantNoteLikePeopleService;
 
 
     public String  addOneInstantNote(String createrId, String content, String location,List<MultipartFile> listUploadFile){
@@ -157,6 +159,7 @@ public class InstantNoteService {
 
         UserInfo createrUser=instantNote.getUserInfo();
 
+        Integer instantNoteId=instantNote.getInstantNoteId();
         String createrName=createrUser.getName();
         String content=instantNote.getContent();
         String location=instantNote.getLocation();
@@ -168,13 +171,15 @@ public class InstantNoteService {
 
         JsonArray listInstantNoteCommentJsonArray=instantNoteCommentService.parseListInstantNoteCommonToJsonArray(listInstantNoteComment);
         JsonArray listInstantNotePictureJsonArray=instantNotePictureService.parseListInstantNotePictureToJsonArray(listInstantNotePicture);
+        JsonArray listLikePeople=instantNoteLikePeopleService.selectListInstantNoteLikePeopleByInstantNoteId(instantNote.getInstantNoteId());
 
+        jsonObject.addProperty("instantNoteId",instantNoteId);
         jsonObject.addProperty("createrName",createrName);
         jsonObject.addProperty("content",content);
         jsonObject.addProperty("location",location);
-        jsonObject.addProperty("likeNumber",likeNumber);
         jsonObject.add("listPicture",listInstantNotePictureJsonArray);
         jsonObject.add("listComment",listInstantNoteCommentJsonArray);
+        jsonObject.add("listLikePeople",listLikePeople);
         return jsonObject;
     }
 

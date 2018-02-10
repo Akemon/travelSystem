@@ -45,7 +45,7 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-         
+        <!--
         <table tableName="tb_instant_note" domainObjectName="InstantNode">
                 <generatedKey column="instant_note_id" sqlStatement="Mysql"/>
         </table>
@@ -56,6 +56,10 @@
         
         <table tableName="tb_instant_note_picture" domainObjectName="InstantNotePicture">
                 <generatedKey column="instant_note_picture_id" sqlStatement="Mysql"/>
+        </table>
+        -->
+        <table tableName="tb_instant_note_like_people" domainObjectName="InstantNoteLikePeople">
+
         </table>
     </context>
 </generatorConfiguration>
