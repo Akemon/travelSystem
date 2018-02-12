@@ -23,7 +23,7 @@ public class InstantNoteCommentController {
         return result;
     }
 
-    @RequestMapping(value="addInstantNoteComment",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+    @RequestMapping(value="deleteInstantNoteComment",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
     public String deleteOneInstantNoteCommentById(Integer instantNoteCommentId){
         String result=instantNoteCommentService.deleteOneInstantNoteCommentById(instantNoteCommentId);

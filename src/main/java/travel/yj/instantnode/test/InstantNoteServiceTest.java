@@ -28,9 +28,9 @@ public class InstantNoteServiceTest {
 
     @Test
     public void testAddOneInstantNoteWithoutPicture(){
-        String createrId="dsf";
-        String content="我就是要发东西测试一下";
-        String location="深职院";
+        String createrId="826299017";
+        String content="今天是2018/2/12我来发东西了(不带图片)";
+        String location="广东·惠州";
         List<MultipartFile> listFile=null;
         String result=instantNoteService.addOneInstantNote(createrId,content,location,listFile);
         assertEquals(true,result.indexOf("成功")>=0);
@@ -61,7 +61,7 @@ public class InstantNoteServiceTest {
 
     @Test
     public void testSelectMyInstantNote(){
-        String result=instantNoteService.selectMyInstantNote("dsf");
+        String result=instantNoteService.selectMyInstantNote("826299017");
         System.out.println(result);
     }
 

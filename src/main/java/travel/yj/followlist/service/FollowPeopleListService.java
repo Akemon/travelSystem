@@ -66,7 +66,7 @@ public class FollowPeopleListService {
      * @param followUserId
      * @return 我关注的用户列表Json字符串
      */
-    public String selectMyFollowList(String followUserId){
+    public String selectMyFollowUserList(String followUserId){
         List<FollowPeopleList> list=followPeopleListMapper.selectByFollowUserId(followUserId);
         JsonArray jsonArray=parseListFollowPeopleListToJsonArray(list);
         return jsonArray.toString();
@@ -83,22 +83,12 @@ public class FollowPeopleListService {
         return jsonArray.toString();
     }
 
-    /**
-     * 获取关注我的用户列表
-     * @param followUserId 我的用户Id
-     * @return 关注我的用户列表的Json字符串
-     */
-    public String selectMyFollowUser(String followUserId){
-        List<FollowPeopleList> list=followPeopleListMapper.selectByFollowUserId(followUserId);
-        JsonArray jsonArray=parseListFollowPeopleListToJsonArray(list);
-        return jsonArray.toString();
-    }
 
 
     /**
      * 获取我关注的 用户Id
      * @param followUserId 我的用户Id
-     * @return
+     * @return 一系列我关注的用户Id
      */
     public List<String> selectListMyFollowUserId(String followUserId){
         List<FollowPeopleList> listFollowPeopleList=followPeopleListMapper.selectByFollowUserId(followUserId);

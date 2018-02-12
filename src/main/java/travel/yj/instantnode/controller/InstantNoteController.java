@@ -37,7 +37,7 @@ public class InstantNoteController {
     @RequestMapping(value="selectMyCreateInstantNote",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
     public String selectMyCreateInstantNote(String loginUserId){
-        String result=instantNoteService.selectMyInstantNote(loginUserId);
+        String result=instantNoteService.selectMyCreateInstantNote(loginUserId);
         return result;
     }
 

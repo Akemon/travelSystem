@@ -30,10 +30,10 @@ public class FollowPeopleListController {
         return result;
     }
 
-    @RequestMapping(value="selectMyFollowList",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @RequestMapping(value="selectMyFollowUserList",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
-    public String selectMyFollowList(String loginUserId){
-        String result=followPeopleListService.selectMyFollowList(loginUserId);
+    public String selectMyFollowUserList(String loginUserId){
+        String result=followPeopleListService.selectMyFollowUserList(loginUserId);
         return result;
     }
 
@@ -44,10 +44,5 @@ public class FollowPeopleListController {
         return result;
     }
 
-    @RequestMapping(value="selectMyFollowUser",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
-    @ResponseBody
-    public String selectMyFollowUser(String loginUserId){
-        String result=followPeopleListService.selectMyFollowUser(loginUserId);
-        return result;
-    }
+
 }
