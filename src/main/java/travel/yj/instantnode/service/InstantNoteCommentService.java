@@ -88,12 +88,14 @@ public class InstantNoteCommentService {
         //评论创建者
         UserInfo createrUserInfo=instantNoteComment.getUserInfo();
         String createrUserName=createrUserInfo.getName();
+        String createrId=createrUserInfo.getUserId();
         //回复谁的评论
         UserInfo replyCommentUser=instantNoteComment.getReplyCommentUser();
 
         jsonObject.addProperty("instantNoteCommentId",instantNoteCommentId);
         jsonObject.addProperty("comment",comment);
         jsonObject.addProperty("createrName",createrUserName);
+        jsonObject.addProperty("createrId",createrId);
 
         boolean isReplyOther=(replyCommentUser!=null);
         if(isReplyOther){

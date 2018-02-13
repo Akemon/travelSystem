@@ -21,13 +21,13 @@ public class FollowPeopleListServiceTest {
 
     @Test
     public void testFolowSomeone(){
-        String result=followPeopleListService.followSomeone("dsf","826299017");
+        String result=followPeopleListService.followSomeone("826299017","dsf");
         assertEquals(true,result.indexOf("成功")>=0);
     }
 
     @Test
     public void testCancelFollowSomeOne(){
-        String result=followPeopleListService.cancelFollowSomeOne(1);
+        String result=followPeopleListService.cancelFollowSomeOne(5);
         assertEquals(true,result.indexOf("成功")>=0);
     }
 
@@ -38,8 +38,10 @@ public class FollowPeopleListServiceTest {
     }
 
     @Test
-    public void testSelectMyFollowUser(){
-        String result=followPeopleListService.selectMyFollowUser("826299017");
+    public void testSelectMyFollowUserList(){
+        String result=followPeopleListService.selectMyFollowUserList("826299017");
         System.out.println(result);
     }
+
+
 }

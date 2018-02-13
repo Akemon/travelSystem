@@ -17,7 +17,7 @@ public interface InstantNoteLikePeopleMapper {
 
     int updateByPrimaryKey(InstantNoteLikePeople record);
 
-    @Select("select * from tb_instant_note_like_people where instant_note_id = #{instantNoteId}")
+    @Select("select * from tb_instant_note_like_people where instant_note_id = #{instantNoteId} order by gmt_create asc")
     @ResultMap("BaseResultMap")
     List<InstantNoteLikePeople> selectByInstantNoteId(@Param("instantNoteId") Integer instantNoteId);
 }

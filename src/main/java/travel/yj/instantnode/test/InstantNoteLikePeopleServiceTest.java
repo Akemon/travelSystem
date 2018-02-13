@@ -19,7 +19,7 @@ public class InstantNoteLikePeopleServiceTest {
 
     @Test
     public void testAddInstantNoteLikePeople(){
-        instantNoteLikePeopleService.addInstantNoteLikePeople(10,"826299017");
+        instantNoteLikePeopleService.addInstantNoteLikePeople(12,"1");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class InstantNoteLikePeopleServiceTest {
 
     @Test
     public void testCancelLikeInstantNote(){
-        instantNoteLikePeopleService.cancelLikeInstantNote(10,"826299017");
+        instantNoteLikePeopleService.cancelLikeInstantNote(12,"826299017");
     }
 
 }

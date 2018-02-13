@@ -63,8 +63,8 @@ public class InstantNoteLikePeopleService {
         JsonObject jsonObject=new JsonObject();
         jsonObject.addProperty("instantNoteId",instantNoteLikePeople.getInstantNoteId());
         jsonObject.addProperty("userName",instantNoteLikePeople.getUserInfo().getName());
+        jsonObject.addProperty("userId",instantNoteLikePeople.getUserInfo().getUserId());
         jsonObject.addProperty("gmtCreate", DateUtil.formatDate(instantNoteLikePeople.getGmtCreate()));
-        jsonObject.addProperty("gmtModified",DateUtil.formatDate(instantNoteLikePeople.getGmtModified()));
         return jsonObject;
     }
 

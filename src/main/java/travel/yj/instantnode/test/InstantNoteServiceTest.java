@@ -29,7 +29,7 @@ public class InstantNoteServiceTest {
     @Test
     public void testAddOneInstantNoteWithoutPicture(){
         String createrId="826299017";
-        String content="今天是2018/2/12我来发东西了(不带图片)";
+        String content="今天是2018/2/13我来发东西了(不带图片)";
         String location="广东·惠州";
         List<MultipartFile> listFile=null;
         String result=instantNoteService.addOneInstantNote(createrId,content,location,listFile);
@@ -39,7 +39,7 @@ public class InstantNoteServiceTest {
     @Test
     public void testAddOneInstantNoteWithPicture(){
         String createrId="826299017";
-        String content="今天是2018/1/27很开心";
+        String content="今天是2018/2/13很开心(带图片)";
         String location="深职院";
 
         List<MultipartFile> listFile=new ArrayList<MultipartFile>();
@@ -62,6 +62,12 @@ public class InstantNoteServiceTest {
     @Test
     public void testSelectMyInstantNote(){
         String result=instantNoteService.selectMyInstantNote("826299017");
+        System.out.println(result);
+    }
+
+    @Test
+    public void testSelectMyCreateInstantNote(){
+        String result=instantNoteService.selectMyCreateInstantNote("826299017");
         System.out.println(result);
     }
 

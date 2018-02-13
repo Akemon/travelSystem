@@ -51,7 +51,7 @@ public interface InstantNoteCommentMapper {
      * @param instantNoteId 朋友圈Id
      * @return 对应的朋友圈评论
      */
-    @Select("select * from tb_instant_note_comment where instant_note_id=#{instantNoteId}")
+    @Select("select * from tb_instant_note_comment where instant_note_id=#{instantNoteId} order by gmt_create asc")
     @ResultMap("BaseResultMap")
     List<InstantNoteComment> selectByInstantNodeId(@Param("instantNoteId") Integer instantNoteId);
 
@@ -60,7 +60,7 @@ public interface InstantNoteCommentMapper {
      * @param userId 用户Id
      * @return 用户对应的朋友圈评论
      */
-    @Select("select * from tb_instant_note_comment where user_id=#{userId}")
+    @Select("select * from tb_instant_note_comment where user_id=#{userId} order by gmt_create asc")
     @ResultMap("BaseResultMap")
     List<InstantNoteComment> selectByUserId(@Param("userId")String userId);
 
@@ -69,7 +69,7 @@ public interface InstantNoteCommentMapper {
      * @param commentId 回复的朋友圈评论Id
      * @return 朋友圈评论实体列表
      */
-    @Select("select * from tb_instant_note_comment where reply_comment_id=#{commentId}")
+    @Select("select * from tb_instant_note_comment where reply_comment_id=#{commentId} order by gmt_create asc")
     @ResultMap("BaseResultMap")
     List<InstantNoteComment> selectByReplyCommentId(@Param("commentId")Integer commentId);
 

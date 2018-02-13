@@ -1,82 +1,43 @@
 [{
-    "instantNoteId": 10,
-    "createrName": "sad",
-    "content": "我就是要发东西测试一下",
-    "location": "深职院",
-    "listPicture": [],
-    "listComment": [],
-    "listLikePeople": []
-}, {
-    "instantNoteId": 9,
-    "createrName": "杨景",
-    "content": "今天是2018/1/27很开心",
-    "location": "深职院",
+    "instantNoteId": 12, //此条朋友圈id
+    "createrName": "杨景", //此条朋友圈创建者姓名
+    "content": "今天是2018/2/13我来发东西了(不带图片)", //朋友圈内容
+    "location": "广东·惠州",//朋友圈地点
     "listPicture": [{
-        "instantNotePictureId": 13,
-        "picturePath": "9\\68e97d17-5580-4bde-b033-97b71aad2a1a_CE.jpg"
+        "instantNotePictureId": 16, //图片Id，用于请求图片
+        "picturePath": "13\\de76b42e-b353-4bda-a20f-759490fc0dd2_CE.jpg" //图片路径
     }, {
-        "instantNotePictureId": 14,
-        "picturePath": "9\\80031dee-d797-46cc-961b-158720736ab0_CE.jpg"
-    }, {"instantNotePictureId": 15, "picturePath": "9\\419fbe7b-ddb0-4036-9017-0f9192539917_zz.jpg"}],
-    "listComment": [{
-        "instantNoteCommentId": 2,
-        "comment": "哈哈哈哈哈哈哈",
-        "createrName": "sad",
-        "isReplyOther": "false",
-        "replyOtherName": "",
-        "createTime": "2018-02-05 19:04:28"
-    }, {
-        "instantNoteCommentId": 3,
-        "comment": "826299017发的哈哈哈哈哈",
-        "createrName": "杨景",
-        "isReplyOther": "false",
-        "replyOtherName": "",
-        "createTime": "2018-02-05 19:04:49"
-    }, {
-        "instantNoteCommentId": 4,
-        "comment": "我来回复你了!!!",
-        "createrName": "杨景",
-        "isReplyOther": "true",
-        "replyOtherName": "sad",
-        "createTime": "2018-02-05 19:06:17"
+        "instantNotePictureId": 17,
+        "picturePath": "13\\4b288d79-32b4-4478-a280-dfdde1287081_CE.jpg"
+    }, {"instantNotePictureId": 18,
+        "picturePath": "13\\b1782860-d48b-4307-a753-032ef228299e_zz.jpg"
     }],
-    "listLikePeople": []
-}, {
-    "instantNoteId": 8,
-    "createrName": "杨景",
-    "content": "今天是2018/1/27很开心",
-    "location": "深职院",
-    "listPicture": [{
-        "instantNotePictureId": 10,
-        "picturePath": "8\\b352cdee-57ba-4ca7-ad5b-b722c2ca3376_CE.jpg"
+    "listComment": [{
+        "instantNoteCommentId": 5, //评论Id
+        "comment": "我来回复你了的朋友圈(creater1)!!不回复谁",//评论内容
+        "createrName": "sdafj",//评论创建者名字
+        "createrId":"1",//评论创建者Id
+        "isReplyOther": "false",//是否回复别人的评论
+        "replyOtherName": "",//被评论人的名字
+        "createTime": "2018-02-13 20:47:58"//评论时间
     }, {
-        "instantNotePictureId": 11,
-        "picturePath": "8\\b852a977-ff07-4ee8-9619-b66b6945c9d9_zx.jpg"
-    }, {"instantNotePictureId": 12, "picturePath": "8\\02b64f43-82f1-44f0-b0a1-e84fcf85f014_zz.jpg"}],
-    "listComment": [],
-    "listLikePeople": []
-}, {
-    "instantNoteId": 5,
-    "createrName": "杨景",
-    "content": "今天是2018/1/27很开心",
-    "location": "深职院",
-    "listPicture": [],
-    "listComment": [],
-    "listLikePeople": []
-}, {
-    "instantNoteId": 3,
-    "createrName": "杨景",
-    "content": "今天是2018/1/27很开心",
-    "location": "深职院",
-    "listPicture": [],
-    "listComment": [],
-    "listLikePeople": []
-}, {
-    "instantNoteId": 2,
-    "createrName": "杨景",
-    "content": "今天是2018/1/27很开心",
-    "location": null,
-    "listPicture": [],
-    "listComment": [],
-    "listLikePeople": []
+        "instantNoteCommentId": 6,
+        "comment": "谢谢你的回复",
+        "createrName": "杨景",
+        "createrId":"826299017",
+        "isReplyOther": "true",
+        "replyOtherName": "sdafj",
+        "createTime": "2018-02-13 20:48:43"
+    }],
+    "listLikePeople": [{
+        "instantNoteId": 12,//朋友圈Id
+        "userName": "杨景",//点赞用户的名字
+        "userId":"826299017",//点赞用户的Id
+        "gmtCreate": "2018-02-13 20:52:07",//点赞时间
+    }, {
+        "instantNoteId": 12,
+        "userName": "sdafj",
+        "userId":"1",
+        "gmtCreate": "2018-02-13 20:52:15",
+    }]
 }]

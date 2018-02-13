@@ -53,7 +53,7 @@ public interface InstantNoteMapper {
      * @param userId 用户Id
      * @return 朋友圈内容列表
      */
-    @Select({"select * from tb_instant_note where user_id =#{userId}"})
+    @Select({"select * from tb_instant_note where user_id =#{userId} order by gmt_create desc"})
     @ResultMap("BaseResultMap")
     List<InstantNote> selectByUserId(@Param("userId") String userId);
 

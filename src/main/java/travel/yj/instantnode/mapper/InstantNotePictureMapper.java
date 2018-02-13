@@ -51,7 +51,7 @@ public interface InstantNotePictureMapper {
      * @param instantNodeId 朋友圈id
      * @return 对应的朋友圈的Id
      */
-    @Select("select * from tb_instant_note_picture where instant_note_id=#{instantNodeId}")
+    @Select("select * from tb_instant_note_picture where instant_note_id=#{instantNodeId} ")
     @ResultMap("BaseResultMap")
     List<InstantNote> selectByInstantNodeId(@Param("instantNodeId") Integer instantNodeId);
 }
