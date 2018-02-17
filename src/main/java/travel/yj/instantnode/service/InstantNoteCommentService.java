@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import travel.hk.userinfo.bean.UserInfo;
-import travel.yj.instantnode.bean.InstantNote;
 import travel.yj.instantnode.bean.InstantNoteComment;
 import travel.yj.instantnode.mapper.InstantNoteCommentMapper;
 import travel.yj.instantnode.util.DateUtil;
+import travel.yj.instantnode.util.CheckUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -128,8 +128,14 @@ public class InstantNoteCommentService {
         Integer instantNoteId=instantNoteComment.getInstantNoteId();
         String createrId=instantNoteComment.getUserId();
         String replyUserId=instantNoteComment.getReplyCommentUserId();
-        if(content==null||content.trim().length()==0){
+        if(CheckUtil.isStringNull(content)){
             throw new IllegalArgumentException("评论内容不能为空!");
+        }
+        if(CheckUtil.isIntegerNull(instantNoteId)){
+            throw new IllegalArgumentException("朋友圈Id不能为空!");
+        }
+        if(CheckUtil.isStringNull(createrId)){
+            throw new IllegalArgumentException("评论创建者Id不能为空!");
         }
         return true;
     }

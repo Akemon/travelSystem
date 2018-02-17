@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import travel.yj.instantnode.bean.InstantNoteLikePeople;
 import travel.yj.instantnode.mapper.InstantNoteLikePeopleMapper;
+import travel.yj.instantnode.util.CheckUtil;
 import travel.yj.instantnode.util.DateUtil;
 
 import java.util.Date;
@@ -22,9 +23,8 @@ public class InstantNoteLikePeopleService {
     private InstantNoteLikePeopleMapper instantNoteLikePeopleMapper;
 
     public String addInstantNoteLikePeople(Integer instantNoteId,String creatorId){
-        if(instantNoteLikePeopleMapper.selectByPrimaryKey(instantNoteId,creatorId)!=null){
-            throw new IllegalArgumentException("您已经为这朋友圈点过赞!无需再次点赞!");
-        }
+        //校验参数
+        checkParams(instantNoteId,creatorId);
 
         InstantNoteLikePeople instantNoteLikePeople=new InstantNoteLikePeople();
         instantNoteLikePeople.setInstantNoteId(instantNoteId);
@@ -66,6 +66,18 @@ public class InstantNoteLikePeopleService {
         jsonObject.addProperty("userId",instantNoteLikePeople.getUserInfo().getUserId());
         jsonObject.addProperty("gmtCreate", DateUtil.formatDate(instantNoteLikePeople.getGmtCreate()));
         return jsonObject;
+    }
+
+    private void checkParams(Integer instantNoteId,String creatorId){
+        if(CheckUtil.isIntegerNull(instantNoteId)){
+            throw new IllegalArgumentException("点赞的朋友圈Id不能为空");
+        }
+        if(CheckUtil.isStringNull(creatorId)){
+            throw new IllegalArgumentException("点赞者Id不能为空");
+        }
+        if(instantNoteLikePeopleMapper.selectByPrimaryKey(instantNoteId,creatorId)!=null){
+            throw new IllegalArgumentException("您已经为这朋友圈点过赞!无需再次点赞!");
+        }
     }
 
 

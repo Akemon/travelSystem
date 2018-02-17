@@ -31,19 +31,11 @@ public class FollowPeopleListService {
      * @return 关注结果
      */
     public String followSomeone(String hostUserId, String followUserId){
-        //1.确定是否已经关注
-        FollowPeopleList followPeopleList=followPeopleListMapper.selectByHostUserIdAndFollowUserId(hostUserId,followUserId);
-        if(followPeopleList!=null){
-            UserInfo hostUser=followPeopleList.getHostUser();
-            throw new IllegalArgumentException("您已经关注了:"+hostUser.getName()+" ,无需再关注!");
-        }
-        //2.是否关注自己
-        if(hostUserId.equals(followUserId)){
-            throw new IllegalArgumentException("请不要关注自己!");
-        }
-        //3.新增关注信息
+        //1.校验参数
+        checkParams(hostUserId,followUserId);
+        //2.新增关注信息
         FollowPeopleList newFollowPeopleList=parseToFollowPeopleList(hostUserId,followUserId);
-        //4.插入关注信息
+        //3.插入关注信息
         followPeopleListMapper.insert(newFollowPeopleList);
         return "关注成功!";
     }
@@ -133,5 +125,18 @@ public class FollowPeopleListService {
             jsonArray.add(jsonObject);
         }
         return jsonArray;
+    }
+
+    private void checkParams(String hostUserId,String followUserId){
+        //1.确定是否已经关注
+        FollowPeopleList followPeopleList=followPeopleListMapper.selectByHostUserIdAndFollowUserId(hostUserId,followUserId);
+        if(followPeopleList!=null){
+            UserInfo hostUser=followPeopleList.getHostUser();
+            throw new IllegalArgumentException("您已经关注了:"+hostUser.getName()+" ,无需再关注!");
+        }
+        //2.是否关注自己
+        if(hostUserId.equals(followUserId)){
+            throw new IllegalArgumentException("请不要关注自己!");
+        }
     }
 }
