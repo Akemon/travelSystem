@@ -11,7 +11,7 @@ import travel.yj.instantnode.service.InstantNoteLikePeopleService;
  * @author 杨景
  */
 @Controller
-@RequestMapping("InstantNoteLike")
+@RequestMapping("instantNoteLike")
 public class InstantNoteLikePeopleController {
 
     @Autowired
