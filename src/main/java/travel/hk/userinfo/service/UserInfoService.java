@@ -13,11 +13,19 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-
+    /**
+     * 获取所有的用户信息
+     * @return
+     */
     public List<UserInfo> getAllUserInfo(){
         return userInfoMapper.selectByExample(null);
     }
 
+    /**
+     * 根据用户id获取用户信息
+     * @param userid
+     * @return
+     */
     public UserInfo getOneUserById(String userid){
         return userInfoMapper.selectByPrimaryKey(userid);
     }
