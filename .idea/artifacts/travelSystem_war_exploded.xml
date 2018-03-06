@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="travelSystem:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/travelSystem_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/travellSystem</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -43,6 +43,9 @@
           <element id="library" level="project" name="Maven: aspectwerkz:aspectwerkz-core:0.8.1" />
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.2" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/travellSystem/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="travelSystem/web/Web" />
     </root>

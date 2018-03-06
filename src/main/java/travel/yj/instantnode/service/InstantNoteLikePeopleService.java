@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import travel.yj.instantnode.bean.InstantNoteLikePeople;
 import travel.yj.instantnode.mapper.InstantNoteLikePeopleMapper;
-import travel.yj.instantnode.util.CheckUtil;
-import travel.yj.instantnode.util.DateUtil;
+import travel.common.util.CheckUtil;
+import travel.common.util.DateUtil;
 
 import java.util.Date;
 import java.util.List;

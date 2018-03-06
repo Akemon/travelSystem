@@ -1,4 +1,4 @@
-package travel.yj.instantnode.util;
+package travel.common.util;
 
 /**@author 杨景 */
 public class CheckUtil {

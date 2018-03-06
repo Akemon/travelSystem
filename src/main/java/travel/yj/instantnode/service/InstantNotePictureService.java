@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import travel.common.util.FileUtil;
 import travel.yj.instantnode.bean.InstantNote;
 import travel.yj.instantnode.bean.InstantNotePicture;
 import travel.yj.instantnode.mapper.InstantNotePictureMapper;
@@ -80,29 +81,22 @@ public class InstantNotePictureService {
         }
         for(MultipartFile oneUploadFile:listUploadFile){
             //存储路径:D:\\travelSystem\\instantNote\\picture\\instantNoteId\\UUId_图片名称
-            String relativePath=getRelativePath(oneUploadFile,instantNoteId);
+            String pictureName=getPictureName(oneUploadFile);
+            String relativePath=instantNoteId+File.separator+pictureName;
             //1.将图片信息插入数据库中
             InstantNotePicture instantNotePicture=insertIntoDB(instantNoteId,relativePath);
             //2.将文件插入文件系统中
-            addOnePictureToFileSystem(oneUploadFile,instantNotePicture.getPicturePath(),instantNoteId);
+            String saveDirectoryPath=InstantNoteFileUtil.getInstantNotePictureBasePath()+File.separator+instantNoteId;
+            FileUtil.uploadFile(saveDirectoryPath,pictureName,oneUploadFile);
         }
-
         return "照片添加成功!";
     }
-
-
 
     public ResponseEntity<byte[]> downloadPicture(Integer instantNotePictureId){
         InstantNotePicture instantNotePicture=instantNotePictureMapper.selectByPrimaryKey(instantNotePictureId);
         //1.获取文件
         File downloadPicture=getDownloadPicture(instantNotePicture);
-        //2.获取ResponseBody数组
-        byte[] body=getDownloadFileResponseBodyBody(downloadPicture);
-        //3.获取HttpHeaders
-        HttpHeaders headers=getDownloadFileHttpHeaders(instantNotePicture.getInstantNotePictureId()+"图片");
-        //4.构建ResponseEntity<byte>
-        ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, HttpStatus.OK);
-        return entity;
+        return FileUtil.downloadFile(downloadPicture);
     }
 
     private File getDownloadPicture(InstantNotePicture instantNotePicture){
@@ -112,65 +106,7 @@ public class InstantNotePictureService {
         return downloadFile;
     }
 
-    /**
-     * 获取文件的body数组[byte数组类型]
-     * @param downloadFile
-     * @return byte[]
-     * @throws IllegalArgumentException
-     */
-    private byte[] getDownloadFileResponseBodyBody(File downloadFile){
-        byte[] body = null;
-        try{
-            InputStream is = new FileInputStream(downloadFile);
-            body = new byte[is.available()];
-            is.read(body);
-            is.close();
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("下载出现异常!"+e.getMessage());
-        }
-        return body;
-    }
 
-    /**
-     * 获取文件下载头
-     * @param downloadPictureName 需要下载的文件的名字
-     * @return
-     */
-    private HttpHeaders getDownloadFileHttpHeaders(String downloadPictureName){
-        HttpHeaders headers = new HttpHeaders();
-        try{
-            headers.add("Content-Disposition",
-                    "attchement;filename=" + new String(downloadPictureName.getBytes("UTF-8"), "ISO-8859-1").replaceAll(" ", ""));
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("下载出现异常!"+e.getMessage());
-        }
-        return headers;
-    }
-
-    private void addOnePictureToFileSystem(MultipartFile uploadFile,String relativePicturePath,Integer instantNoteId){
-        String basePath= InstantNoteFileUtil.getInstantNotePictureBasePath();
-        //先判断存放的图片的文件夹是否存在，如果不存在,则创建
-        File saveDirectory=new File(basePath,instantNoteId+"");
-        if(!saveDirectory.exists()){
-            boolean isCreate=saveDirectory.mkdirs();
-            if(!isCreate){
-                throw new IllegalArgumentException("存储图片的文件夹创建失败!");
-            }
-        }
-
-        //保存图片
-        //生成存储路径
-        File destinationFile=new File(basePath,relativePicturePath);
-        try {
-            uploadFile.transferTo(destinationFile);
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("照片上传失败!");
-        }
-    }
 
     private InstantNotePicture insertIntoDB(Integer instantNoteId,String relativePath){
         InstantNotePicture instantNotePicture=new InstantNotePicture();
@@ -186,7 +122,7 @@ public class InstantNotePictureService {
         if(!file.exists()){
             throw new IllegalArgumentException("需要删除的朋友圈照片不存在!");
         }
-        boolean isDelete=file.delete();
+        boolean isDelete=FileUtil.deleteFile(file);
         if(!isDelete){
             throw new IllegalArgumentException("朋友圈照片删除失败");
         }
@@ -211,11 +147,12 @@ public class InstantNotePictureService {
         return jsonObject;
     }
 
-    private String getRelativePath(MultipartFile file,Integer instantNoteId){
-        String fileName=file.getName();
+    private String getPictureName(MultipartFile file){
+        String fileName=file.getOriginalFilename();
         String uuid= UUID.randomUUID().toString();
-        return instantNoteId+File.separator+uuid+"_"+fileName;
+        return uuid+"_"+fileName;
     }
+
 
 
 }

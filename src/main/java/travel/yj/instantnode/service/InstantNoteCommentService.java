@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.yj.instantnode.bean.InstantNoteComment;
 import travel.yj.instantnode.mapper.InstantNoteCommentMapper;
-import travel.yj.instantnode.util.DateUtil;
-import travel.yj.instantnode.util.CheckUtil;
+import travel.common.util.DateUtil;
+import travel.common.util.CheckUtil;
 
 import java.util.Date;
 import java.util.List;

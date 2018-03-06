@@ -1,4 +1,4 @@
-package travel.yj.instantnode.util;
+package travel.common.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
