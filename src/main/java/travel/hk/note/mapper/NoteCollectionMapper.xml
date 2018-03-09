@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.hk.note.mapper.NoteCollectionMapper">
+  <resultMap id="BaseResultMap" type="travel.hk.note.bean.NoteCollection">
+    <id column="travel_note_collection_id" jdbcType="INTEGER" property="travelNoteCollectionId" />
+    <result column="travel_note_id" jdbcType="INTEGER" property="travelNoteId" />
+    <result column="collect_user_id" jdbcType="VARCHAR" property="collectUserId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifited" jdbcType="TIMESTAMP" property="gmtModifited" />
+
+    <association property="userInfo" column="collect_user_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    <association property="note" column="travel_note_id" select="travel.hk.note.mapper.NoteMapper.selectByPrimaryKey"></association>
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    travel_note_collection_id, travel_note_id, collect_user_id, gmt_create, gmt_modifited
+  </sql>
+  <select id="selectByExample" parameterType="travel.hk.note.bean.NoteCollectionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_travel_note_collection
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_travel_note_collection
+    where travel_note_collection_id = #{travelNoteCollectionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_travel_note_collection
+    where travel_note_collection_id = #{travelNoteCollectionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="travel.hk.note.bean.NoteCollectionExample">
+    delete from tb_travel_note_collection
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="travel.hk.note.bean.NoteCollection">
+    insert into tb_travel_note_collection (travel_note_collection_id, travel_note_id, 
+      collect_user_id, gmt_create, gmt_modifited
+      )
+    values (#{travelNoteCollectionId,jdbcType=INTEGER}, #{travelNoteId,jdbcType=INTEGER}, 
+      #{collectUserId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="travel.hk.note.bean.NoteCollection">
+    insert into tb_travel_note_collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="travelNoteCollectionId != null">
+        travel_note_collection_id,
+      </if>
+      <if test="travelNoteId != null">
+        travel_note_id,
+      </if>
+      <if test="collectUserId != null">
+        collect_user_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="travelNoteCollectionId != null">
+        #{travelNoteCollectionId,jdbcType=INTEGER},
+      </if>
+      <if test="travelNoteId != null">
+        #{travelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="collectUserId != null">
+        #{collectUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="travel.hk.note.bean.NoteCollectionExample" resultType="java.lang.Long">
+    select count(*) from tb_travel_note_collection
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_travel_note_collection
+    <set>
+      <if test="record.travelNoteCollectionId != null">
+        travel_note_collection_id = #{record.travelNoteCollectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.travelNoteId != null">
+        travel_note_id = #{record.travelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectUserId != null">
+        collect_user_id = #{record.collectUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModifited != null">
+        gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_travel_note_collection
+    set travel_note_collection_id = #{record.travelNoteCollectionId,jdbcType=INTEGER},
+      travel_note_id = #{record.travelNoteId,jdbcType=INTEGER},
+      collect_user_id = #{record.collectUserId,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="travel.hk.note.bean.NoteCollection">
+    update tb_travel_note_collection
+    <set>
+      <if test="travelNoteId != null">
+        travel_note_id = #{travelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="collectUserId != null">
+        collect_user_id = #{collectUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where travel_note_collection_id = #{travelNoteCollectionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="travel.hk.note.bean.NoteCollection">
+    update tb_travel_note_collection
+    set travel_note_id = #{travelNoteId,jdbcType=INTEGER},
+      collect_user_id = #{collectUserId,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+    where travel_note_collection_id = #{travelNoteCollectionId,jdbcType=INTEGER}
+  </update>
+</mapper>
