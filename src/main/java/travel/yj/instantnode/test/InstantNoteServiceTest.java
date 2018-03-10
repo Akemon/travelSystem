@@ -7,6 +7,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
+import travel.common.test.MultipartFileTestUtil;
 import travel.yj.instantnode.service.InstantNoteService;
 
 import java.io.File;
@@ -43,9 +44,9 @@ public class InstantNoteServiceTest {
         String location="深职院";
 
         List<MultipartFile> listFile=new ArrayList<MultipartFile>();
-        MultipartFile file1=parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
-        MultipartFile file2=parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
-        MultipartFile file3=parseFileToMockMultipartFile(new File("D:\\0_test\\zz.jpg"));
+        MultipartFile file1=MultipartFileTestUtil.parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
+        MultipartFile file2= MultipartFileTestUtil.parseFileToMockMultipartFile(new File("D:\\0_test\\CE.jpg"));
+        MultipartFile file3=MultipartFileTestUtil.parseFileToMockMultipartFile(new File("D:\\0_test\\zz.jpg"));
         listFile.add(file1);
         listFile.add(file2);
         listFile.add(file3);
@@ -71,13 +72,4 @@ public class InstantNoteServiceTest {
         System.out.println(result);
     }
 
-    private static MultipartFile parseFileToMockMultipartFile(File file){
-        try {
-            MultipartFile multipartFile = new MockMultipartFile(file.getName(), new FileInputStream(file));
-            return multipartFile;
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException("转换文件出现异常:"+e.getMessage());
-        }
-    }
 }
