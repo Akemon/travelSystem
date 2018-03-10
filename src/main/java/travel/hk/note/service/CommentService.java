@@ -9,10 +9,7 @@ import travel.hk.note.bean.CommentExample;
 import travel.hk.note.mapper.CommentMapper;
 import travel.hk.util.ChectUtil;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CommentService {
@@ -68,16 +65,36 @@ public class CommentService {
      * @param noteId
      * @return
      */
-    public HashMap<Comment,List<Comment>> getCommentListByNoteId(int noteId){
+//    public HashMap<Comment,List<Comment>> getCommentListByNoteId(int noteId){
+//        Iterator iterator =getFirstCreateCommentListByNoteId(noteId).iterator();
+//        HashMap<Comment,List<Comment>> commentListHashMap =new HashMap<>();
+//        while (iterator.hasNext()){
+//            Comment comment = (Comment) iterator.next();
+//       //     System.out.println("评论内容："+comment.getContent());
+//            List<Comment> commentList =getAllReplyCommentListByNoteIdAndCommentId(comment.getTravelNoteCommentId(),comment.getFollowTravelNoteId());
+//            commentListHashMap.put(comment,commentList);
+//        }
+//        return commentListHashMap;
+//    }
+
+    /**
+     * 列出一篇游记的所有评论
+     * @param noteId
+     * @return
+     */
+    public List<List<Comment>> getCommentListByNoteId(int noteId){
+        List<List<Comment>> commentLists =new ArrayList<>();
         Iterator iterator =getFirstCreateCommentListByNoteId(noteId).iterator();
-        HashMap<Comment,List<Comment>> commentListHashMap =new HashMap<>();
-        while (iterator.hasNext()){
-            Comment comment = (Comment) iterator.next();
-       //     System.out.println("评论内容："+comment.getContent());
-            List<Comment> commentList =getAllReplyCommentListByNoteIdAndCommentId(comment.getTravelNoteCommentId(),comment.getFollowTravelNoteId());
-            commentListHashMap.put(comment,commentList);
+        while(iterator.hasNext()){
+            List<Comment> commentList=new ArrayList<>();
+            Comment  comment =(Comment) iterator.next();
+            commentList.add(comment);
+            List<Comment> tempCommentList =getAllReplyCommentListByNoteIdAndCommentId(comment.getTravelNoteCommentId(),comment.getFollowTravelNoteId());
+            if(tempCommentList!=null)
+            commentList.addAll(tempCommentList);
+            commentLists.add(commentList);
         }
-        return commentListHashMap;
+        return commentLists;
     }
 
     /**
@@ -106,15 +123,6 @@ public class CommentService {
         criteria.andFollowTravelNoteIdEqualTo(noteId);
         return commentMapper.selectByExample(commentExample);
     }
-
-    public String getOneCommentInfo(Comment comment){
-        String name =comment.getCreateUserInfo().getName();
-        String content = comment.getContent();
-        String likePeople =comment.getLikeNumber();
-        String publishTime = DateUtil.formatDate(comment.getGmtCreate());
-        return "{\"status\": \"3\",\"message\": \"\"\"errCode\": \"0\"}";
-    }
-
 
     private boolean checkParams(int noteId, String userId, String replyUserId, int signReplyCommentId, String content) {
         return !CheckUtil.isStringNull(userId)&&!CheckUtil.isStringNull(replyUserId)&&!CheckUtil.isIntegerNull(signReplyCommentId)
