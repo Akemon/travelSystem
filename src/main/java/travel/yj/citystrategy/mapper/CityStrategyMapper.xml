@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.yj.citystrategy.mapper.CityStrategyMapper">
+  <resultMap id="BaseResultMap" type="travel.yj.citystrategy.bean.CityStrategy">
+    <id column="city_strategy_id" jdbcType="INTEGER" property="cityStrategyId" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="cityname" jdbcType="VARCHAR" property="cityname" />
+    <result column="city_start" jdbcType="VARCHAR" property="cityStart" />
+    <result column="attrative_season" jdbcType="VARCHAR" property="attrativeSeason" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="attrative_foot" jdbcType="VARCHAR" property="attrativeFoot" />
+    <result column="attrative_scenic" jdbcType="VARCHAR" property="attrativeScenic" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifited" jdbcType="TIMESTAMP" property="gmtModifited" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_city_strategy
+    where city_strategy_id = #{cityStrategyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="travel.yj.citystrategy.bean.CityStrategy">
+    <selectKey keyProperty="cityStrategyId" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_city_strategy (city_strategy_id, path, cityname, 
+      city_start, attrative_season, description, 
+      attrative_foot, attrative_scenic, gmt_create, 
+      gmt_modifited, content)
+    values (#{cityStrategyId,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{cityStart,jdbcType=VARCHAR}, #{attrativeSeason,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{attrativeFoot,jdbcType=VARCHAR}, #{attrativeScenic,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModifited,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="travel.yj.citystrategy.bean.CityStrategy">
+    update tb_city_strategy
+    set path = #{path,jdbcType=VARCHAR},
+      cityname = #{cityname,jdbcType=VARCHAR},
+      city_start = #{cityStart,jdbcType=VARCHAR},
+      attrative_season = #{attrativeSeason,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      attrative_foot = #{attrativeFoot,jdbcType=VARCHAR},
+      attrative_scenic = #{attrativeScenic,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where city_strategy_id = #{cityStrategyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select city_strategy_id, path, cityname, city_start, attrative_season, description, 
+    attrative_foot, attrative_scenic, gmt_create, gmt_modifited, content
+    from tb_city_strategy
+    where city_strategy_id = #{cityStrategyId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select city_strategy_id, path, cityname, city_start, attrative_season, description, 
+    attrative_foot, attrative_scenic, gmt_create, gmt_modifited, content
+    from tb_city_strategy
+  </select>
+</mapper>
