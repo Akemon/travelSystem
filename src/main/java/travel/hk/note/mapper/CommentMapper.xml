@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.hk.note.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="travel.hk.note.bean.Comment">
+    <id column="travel_note_comment_id" jdbcType="INTEGER" property="travelNoteCommentId" />
+    <result column="follow_travel_note_id" jdbcType="INTEGER" property="followTravelNoteId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="like_number" jdbcType="VARCHAR" property="likeNumber" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="sign_reply_comment_id" jdbcType="INTEGER" property="signReplyCommentId" />
+    <result column="reply_comment_id" jdbcType="VARCHAR" property="replyCommentId" />
+    <result column="is_accuse" jdbcType="BIT" property="isAccuse" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifited" jdbcType="TIMESTAMP" property="gmtModifited" />
+
+    <association property="createUserInfo" column="create_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+    <association property="replyUserInfo" column="reply_comment_id" select="travel.hk.userinfo.mapper.UserInfoMapper.selectByPrimaryKey"></association>
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    travel_note_comment_id, follow_travel_note_id, content, like_number, create_id, reply_comment_id,
+    is_accuse, gmt_create, gmt_modifited,sign_reply_comment_id
+  </sql>
+  <select id="selectByExample" parameterType="travel.hk.note.bean.CommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_travel_note_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_travel_note_comment
+    where travel_note_comment_id = #{travelNoteCommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_travel_note_comment
+    where travel_note_comment_id = #{travelNoteCommentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="travel.hk.note.bean.CommentExample">
+    delete from tb_travel_note_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="travel.hk.note.bean.Comment">
+    insert into tb_travel_note_comment (travel_note_comment_id, follow_travel_note_id, 
+      content, like_number, create_id, 
+      reply_comment_id, is_accuse, gmt_create, 
+      gmt_modifited)
+    values (#{travelNoteCommentId,jdbcType=INTEGER}, #{followTravelNoteId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{likeNumber,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{replyCommentId,jdbcType=VARCHAR}, #{isAccuse,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModifited,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="travel.hk.note.bean.Comment">
+    insert into tb_travel_note_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="travelNoteCommentId != null">
+        travel_note_comment_id,
+      </if>
+      <if test="followTravelNoteId != null">
+        follow_travel_note_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="likeNumber != null">
+        like_number,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="signReplyCommentId != null">
+        sign_reply_comment_id,
+      </if>
+      <if test="replyCommentId != null">
+        reply_comment_id,
+      </if>
+      <if test="isAccuse != null">
+        is_accuse,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="travelNoteCommentId != null">
+        #{travelNoteCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="followTravelNoteId != null">
+        #{followTravelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="likeNumber != null">
+        #{likeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="signReplyCommentId != null">
+        #{signReplyCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="replyCommentId != null">
+        #{replyCommentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isAccuse != null">
+        #{isAccuse,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="travel.hk.note.bean.CommentExample" resultType="java.lang.Long">
+    select count(*) from tb_travel_note_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_travel_note_comment
+    <set>
+      <if test="record.travelNoteCommentId != null">
+        travel_note_comment_id = #{record.travelNoteCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.followTravelNoteId != null">
+        follow_travel_note_id = #{record.followTravelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likeNumber != null">
+        like_number = #{record.likeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyCommentId != null">
+        reply_comment_id = #{record.replyCommentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAccuse != null">
+        is_accuse = #{record.isAccuse,jdbcType=BIT},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModifited != null">
+        gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_travel_note_comment
+    set travel_note_comment_id = #{record.travelNoteCommentId,jdbcType=INTEGER},
+      follow_travel_note_id = #{record.followTravelNoteId,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      like_number = #{record.likeNumber,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=VARCHAR},
+      reply_comment_id = #{record.replyCommentId,jdbcType=VARCHAR},
+      is_accuse = #{record.isAccuse,jdbcType=BIT},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="travel.hk.note.bean.Comment">
+    update tb_travel_note_comment
+    <set>
+      <if test="followTravelNoteId != null">
+        follow_travel_note_id = #{followTravelNoteId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="likeNumber != null">
+        like_number = #{likeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyCommentId != null">
+        reply_comment_id = #{replyCommentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isAccuse != null">
+        is_accuse = #{isAccuse,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where travel_note_comment_id = #{travelNoteCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="travel.hk.note.bean.Comment">
+    update tb_travel_note_comment
+    set follow_travel_note_id = #{followTravelNoteId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      like_number = #{likeNumber,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      reply_comment_id = #{replyCommentId,jdbcType=VARCHAR},
+      is_accuse = #{isAccuse,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+    where travel_note_comment_id = #{travelNoteCommentId,jdbcType=INTEGER}
+  </update>
+</mapper>

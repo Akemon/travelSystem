@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.hk.attraction.mapper.AttractionMapper">
+  <resultMap id="BaseResultMap" type="travel.hk.attraction.bean.Attraction">
+    <id column="tourist_attraction_id" jdbcType="INTEGER" property="touristAttractionId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="zoom_level" jdbcType="VARCHAR" property="zoomLevel" />
+    <result column="listen_number" jdbcType="INTEGER" property="listenNumber" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="open_time" jdbcType="VARCHAR" property="openTime" />
+    <result column="tourist_attraction_level" jdbcType="VARCHAR" property="touristAttractionLevel" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="good_place" jdbcType="VARCHAR" property="goodPlace" />
+    <result column="hot_level" jdbcType="VARCHAR" property="hotLevel" />
+    <result column="transportation" jdbcType="VARCHAR" property="transportation" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifited" jdbcType="TIMESTAMP" property="gmtModifited" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tourist_attraction_id, name, description, location, longitude, latitude, zoom_level, 
+    listen_number, picture, open_time, tourist_attraction_level, price, good_place, hot_level, 
+    transportation, gmt_create, gmt_modifited
+  </sql>
+  <select id="selectByExample" parameterType="travel.hk.attraction.bean.AttractionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_tourist_attraction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_tourist_attraction
+    where tourist_attraction_id = #{touristAttractionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_tourist_attraction
+    where tourist_attraction_id = #{touristAttractionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="travel.hk.attraction.bean.AttractionExample">
+    delete from tb_tourist_attraction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="travel.hk.attraction.bean.Attraction">
+    insert into tb_tourist_attraction (tourist_attraction_id, name, description, 
+      location, longitude, latitude, 
+      zoom_level, listen_number, picture, 
+      open_time, tourist_attraction_level, price, 
+      good_place, hot_level, transportation, 
+      gmt_create, gmt_modifited)
+    values (#{touristAttractionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{zoomLevel,jdbcType=VARCHAR}, #{listenNumber,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
+      #{openTime,jdbcType=VARCHAR}, #{touristAttractionLevel,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{goodPlace,jdbcType=VARCHAR}, #{hotLevel,jdbcType=VARCHAR}, #{transportation,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="travel.hk.attraction.bean.Attraction">
+    insert into tb_tourist_attraction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="touristAttractionId != null">
+        tourist_attraction_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="zoomLevel != null">
+        zoom_level,
+      </if>
+      <if test="listenNumber != null">
+        listen_number,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="touristAttractionLevel != null">
+        tourist_attraction_level,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="goodPlace != null">
+        good_place,
+      </if>
+      <if test="hotLevel != null">
+        hot_level,
+      </if>
+      <if test="transportation != null">
+        transportation,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="touristAttractionId != null">
+        #{touristAttractionId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="zoomLevel != null">
+        #{zoomLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="listenNumber != null">
+        #{listenNumber,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="touristAttractionLevel != null">
+        #{touristAttractionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="goodPlace != null">
+        #{goodPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="hotLevel != null">
+        #{hotLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="transportation != null">
+        #{transportation,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="travel.hk.attraction.bean.AttractionExample" resultType="java.lang.Long">
+    select count(*) from tb_tourist_attraction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_tourist_attraction
+    <set>
+      <if test="record.touristAttractionId != null">
+        tourist_attraction_id = #{record.touristAttractionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zoomLevel != null">
+        zoom_level = #{record.zoomLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.listenNumber != null">
+        listen_number = #{record.listenNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.picture != null">
+        picture = #{record.picture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openTime != null">
+        open_time = #{record.openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touristAttractionLevel != null">
+        tourist_attraction_level = #{record.touristAttractionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodPlace != null">
+        good_place = #{record.goodPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotLevel != null">
+        hot_level = #{record.hotLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transportation != null">
+        transportation = #{record.transportation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModifited != null">
+        gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_tourist_attraction
+    set tourist_attraction_id = #{record.touristAttractionId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      zoom_level = #{record.zoomLevel,jdbcType=VARCHAR},
+      listen_number = #{record.listenNumber,jdbcType=INTEGER},
+      picture = #{record.picture,jdbcType=VARCHAR},
+      open_time = #{record.openTime,jdbcType=VARCHAR},
+      tourist_attraction_level = #{record.touristAttractionLevel,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      good_place = #{record.goodPlace,jdbcType=VARCHAR},
+      hot_level = #{record.hotLevel,jdbcType=VARCHAR},
+      transportation = #{record.transportation,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{record.gmtModifited,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="travel.hk.attraction.bean.Attraction">
+    update tb_tourist_attraction
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="zoomLevel != null">
+        zoom_level = #{zoomLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="listenNumber != null">
+        listen_number = #{listenNumber,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="touristAttractionLevel != null">
+        tourist_attraction_level = #{touristAttractionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="goodPlace != null">
+        good_place = #{goodPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="hotLevel != null">
+        hot_level = #{hotLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="transportation != null">
+        transportation = #{transportation,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifited != null">
+        gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tourist_attraction_id = #{touristAttractionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="travel.hk.attraction.bean.Attraction">
+    update tb_tourist_attraction
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      zoom_level = #{zoomLevel,jdbcType=VARCHAR},
+      listen_number = #{listenNumber,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      open_time = #{openTime,jdbcType=VARCHAR},
+      tourist_attraction_level = #{touristAttractionLevel,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      good_place = #{goodPlace,jdbcType=VARCHAR},
+      hot_level = #{hotLevel,jdbcType=VARCHAR},
+      transportation = #{transportation,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modifited = #{gmtModifited,jdbcType=TIMESTAMP}
+    where tourist_attraction_id = #{touristAttractionId,jdbcType=INTEGER}
+  </update>
+</mapper>
