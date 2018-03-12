@@ -52,5 +52,7 @@
 
     <!--spring 配置文件的核心点（数据源、与mybatis的整合，事务控制）-->
 
+    <!-- 异常处理器 -->
+    <bean id="exceptionResolver" class="travel.common.resolver.ExceptionResolver"></bean>
 
 </beans>
