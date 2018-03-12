@@ -53,4 +53,12 @@ public class commentTest {
     public void testGetAllComments(){
         commentService.getCommentListByNoteId(1);
     }
+
+    /**
+     * 测试删除评论
+     */
+    @Test
+    public void deleteComments(){
+        System.out.println(commentService.deleteCommentByNoteIdAndCommentIdAndUserId(4,1,"1"));
+    }
 }

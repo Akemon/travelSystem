@@ -29,4 +29,8 @@ public class UserInfoService {
     public UserInfo getOneUserById(String userid){
         return userInfoMapper.selectByPrimaryKey(userid);
     }
+
+    public boolean userLogin(UserInfo userInfo){
+        return false;
+    }
 }

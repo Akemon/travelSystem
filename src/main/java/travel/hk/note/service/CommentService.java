@@ -2,6 +2,8 @@ package travel.hk.note.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import travel.common.util.CheckUtil;
 import travel.common.util.DateUtil;
 import travel.hk.note.bean.Comment;
@@ -12,6 +14,7 @@ import travel.hk.util.ChectUtil;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
 public class CommentService {
     @Autowired
     CommentMapper commentMapper;
@@ -60,11 +63,11 @@ public class CommentService {
         }
     }
 
-    /**
-     * 列出一篇游记的所有评论
-     * @param noteId
-     * @return
-     */
+//    /**
+//     * 列出一篇游记的所有评论
+//     * @param noteId
+//     * @return
+//     */
 //    public HashMap<Comment,List<Comment>> getCommentListByNoteId(int noteId){
 //        Iterator iterator =getFirstCreateCommentListByNoteId(noteId).iterator();
 //        HashMap<Comment,List<Comment>> commentListHashMap =new HashMap<>();
@@ -122,6 +125,39 @@ public class CommentService {
         criteria.andSignReplyCommentIdEqualTo(commentId);
         criteria.andFollowTravelNoteIdEqualTo(noteId);
         return commentMapper.selectByExample(commentExample);
+    }
+
+    /**
+     * 删除评论
+     * @param commentId 评论Id
+     * @param noteId 游记Id
+     * @param userId 用户Id
+     * @return 返回是否删除成功
+     */
+    public boolean deleteCommentByNoteIdAndCommentIdAndUserId(int commentId,int noteId,String userId){
+        //两种可能
+        //1、这条评论是本人创建的第一条评论
+        //2、这条评论是回复某人的评论
+        Comment comment =commentMapper.selectByPrimaryKey(commentId);
+        int signReplyCommentId =comment.getSignReplyCommentId();
+        String tempUserId =comment.getCreateId();
+        //不是本人在删除
+        if(!tempUserId.equals(userId)) return false;
+        //回复某人的情况，直接删除一条
+        if(signReplyCommentId!=0){
+            commentMapper.deleteByPrimaryKey(commentId);
+        }
+        //自己创建的第一条评论，需要删除回复的所有评论
+        else{
+            CommentExample commentExample =new CommentExample();
+            CommentExample.Criteria criteria =commentExample.createCriteria();
+            criteria.andSignReplyCommentIdEqualTo(commentId);
+            //删除所有回复
+            commentMapper.deleteByExample(commentExample);
+            //删除创建的第一条评论
+            commentMapper.deleteByPrimaryKey(commentId);
+        }
+        return true;
     }
 
     private boolean checkParams(int noteId, String userId, String replyUserId, int signReplyCommentId, String content) {

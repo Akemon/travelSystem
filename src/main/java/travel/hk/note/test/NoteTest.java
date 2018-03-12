@@ -20,4 +20,12 @@ public class NoteTest {
         System.out.println(note.getTitle());
         System.out.println(note.getContent().getTravelNoteContent());
     }
+
+    @Test
+    public void testDeleteNote(){
+        Note note =new Note();
+        note.setTravelNoteId(2);
+        note.setUserId("2");
+       System.out.println(noteService.deleteOneNote(note));
+    }
 }

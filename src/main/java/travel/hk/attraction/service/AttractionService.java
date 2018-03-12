@@ -37,9 +37,14 @@ public class AttractionService {
     }
 
 
+    /**
+     * 创建一个新景点
+     * @param attraction
+     * @param listUploadFile
+     */
     public void createNewAttraction(Attraction attraction,List<MultipartFile> listUploadFile){
         if(attraction!=null){
-            attractionMapper.insertSelective(attraction);
+
             //插入图片
             if(listUploadFile!=null||listUploadFile.size()!=0) {
                 String relativePath = "";
@@ -51,7 +56,9 @@ public class AttractionService {
                     String saveDirectoryPath = AttractionFileUtil.getAttractionPictureBasePath() + File.separator + attraction.getTouristAttractionId();
                     FileUtil.uploadFile(saveDirectoryPath, pictureName, oneUploadFile);
                 }
+                attraction.setPicture(relativePath);
             }
+            attractionMapper.insertSelective(attraction);
 
 
 

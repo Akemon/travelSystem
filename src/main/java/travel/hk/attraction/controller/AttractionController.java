@@ -17,6 +17,11 @@ public class AttractionController {
     @Autowired
     AttractionService attractionService;
 
+    /**
+     * 根据景点Id获取详细信息
+     * @param attractionID
+     * @return
+     */
     @RequestMapping("/getAttractionById")
     @ResponseBody
     public Message getAttractionById(@RequestParam(value = "attractionID")Integer attractionID){
@@ -28,6 +33,10 @@ public class AttractionController {
 
     }
 
+    /**
+     * 获取所有景点的信息
+     * @return
+     */
     @RequestMapping("/getAllAttractions")
     @ResponseBody
     public Message getAllAttractions(){

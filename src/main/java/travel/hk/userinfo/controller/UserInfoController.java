@@ -20,6 +20,10 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
 
+    /**
+     * 获取所有用户的信息
+     * @return
+     */
     @RequestMapping("/getAllUserInfo")
     @ResponseBody
     public Message getAllUserInfo(){
@@ -27,6 +31,11 @@ public class UserInfoController {
         return Message.success().add("result",userInfoList);
     }
 
+    /**
+     * 根据用户Id获取用户详细信息
+     * @param userId
+     * @return
+     */
     @RequestMapping("/getOneUserById")
     @ResponseBody
     public Message getOneUserById(@RequestParam(value = "userId" ) String userId){
