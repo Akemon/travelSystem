@@ -1,6 +1,9 @@
 package travel.yj.instantnode.util;
 
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,9 +18,9 @@ public class InstantNoteFileUtil {
 
     public static String getInstantNotePictureBasePath(){
         Properties properties=new Properties();
-        InputStream inputStream = ClassLoader.getSystemResourceAsStream("travelSystemBasePath");
+        Resource resource = new ClassPathResource("travelSystemBasePath");
         try {
-            properties.load(inputStream);
+            properties.load(resource.getInputStream());
             return (String)properties.get("travelSystem.instantNote.picture.basePath");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
