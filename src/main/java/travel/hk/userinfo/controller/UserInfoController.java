@@ -1,10 +1,13 @@
 package travel.hk.userinfo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.service.UserInfoService;
 import travel.hk.util.ChectUtil;
@@ -47,6 +50,32 @@ public class UserInfoController {
         }
         return Message.fail();
 
+    }
+    @RequestMapping("/userLogin")
+    @ResponseBody
+    public Message userLogin(UserInfo userInfo){
+        UserInfo user =userInfoService.userLogin(userInfo);
+        if(user==null) return Message.fail();
+        return Message.success().add("extend",user);
+    }
+
+    @RequestMapping("/userRegister")
+    @ResponseBody
+    public Message userRegister(UserInfo userInfo,List<MultipartFile> listUploadFile){
+        boolean flag =userInfoService.userRegister(userInfo,listUploadFile);
+        if(flag) return Message.success();
+        return Message.fail();
+    }
+
+    /**
+     * 下载图片
+     * @param picturePath
+     * @return
+     */
+    @RequestMapping(value="downloadPicture",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<byte[]> downloadPicture(String picturePath){
+        return userInfoService.downloadPicture(picturePath);
     }
 
 }

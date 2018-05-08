@@ -1,6 +1,7 @@
 package travel.hk.attraction.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travel.common.util.FileUtil;
@@ -11,6 +12,8 @@ import travel.yj.instantnode.bean.InstantNotePicture;
 import travel.yj.instantnode.util.InstantNoteFileUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +28,15 @@ public class AttractionService {
      * @return
      */
     public Attraction getAttractionById(int id){
-        return attractionMapper.selectByPrimaryKey(id);
+        Attraction attraction = attractionMapper.selectByPrimaryKey(id);
+//        List<ResponseEntity<byte[]>> pictureList =new ArrayList<>();
+//        String picture =attraction.getPicture();
+//        String pictureArr[] =picture.split(",");
+//        for(int i =0;i<pictureArr.length;i++){
+//            pictureList.add(FileUtil.downloadFile(new File(AttractionFileUtil.getAttractionPictureBasePath()+File.separator+pictureArr[i])));
+//        }
+//        attraction.setPictureList(pictureList);
+        return attraction;
     }
 
     /**
@@ -33,7 +44,23 @@ public class AttractionService {
      * @return
      */
     public List<Attraction> getAllAttractions(){
-        return attractionMapper.selectByExample(null);
+        List<Attraction> attractions = attractionMapper.selectByExample(null);
+//        List<Attraction> newAttractions =new ArrayList<Attraction>();
+//        Iterator iterator =attractions.iterator();
+//        while(iterator.hasNext()){
+//            Attraction attraction = (Attraction) iterator.next();
+//            List<ResponseEntity<byte[]>> pictureList =new ArrayList<>();
+//            String picture =attraction.getPicture();
+//            if(picture==null||picture.equals("")) continue;
+//            String pictureArr[] =picture.split(",");
+//            for(int i =0;i<pictureArr.length;i++){
+//                System.out.println("picture"+pictureArr[i]);
+//                pictureList.add(FileUtil.downloadFile(new File(AttractionFileUtil.getAttractionPictureBasePath()+File.separator+pictureArr[i])));
+//            }
+//            attraction.setPictureList(pictureList);
+//            newAttractions.add(attraction);
+//        }
+        return attractions;
     }
 
 
@@ -44,12 +71,12 @@ public class AttractionService {
      */
     public void createNewAttraction(Attraction attraction,List<MultipartFile> listUploadFile){
         if(attraction!=null){
-
+        attractionMapper.insertSelective(attraction);
             //插入图片
             if(listUploadFile!=null||listUploadFile.size()!=0) {
                 String relativePath = "";
                 for (MultipartFile oneUploadFile : listUploadFile) {
-                    //存储路径:D:\\travelSystem\\attraction\\picture\\attractionId\\UUId_图片名称
+                    //存储路径:c:\\travelSystem\\attraction\\picture\\attractionId\\UUId_图片名称
                     String pictureName = getPictureName(oneUploadFile);
                     relativePath += attraction.getTouristAttractionId() + File.separator + pictureName + ",";
                     //2.将文件插入文件系统中
@@ -58,7 +85,7 @@ public class AttractionService {
                 }
                 attraction.setPicture(relativePath);
             }
-            attractionMapper.insertSelective(attraction);
+            attractionMapper.updateByPrimaryKeySelective(attraction);
 
 
 
@@ -69,5 +96,10 @@ public class AttractionService {
         String fileName=file.getOriginalFilename();
         String uuid= UUID.randomUUID().toString();
         return uuid+"_"+fileName;
+    }
+
+    public ResponseEntity<byte[]> downloadPicture(String path) {
+        String picturePath =AttractionFileUtil.getAttractionPictureBasePath()+File.separator+path;
+        return FileUtil.downloadFile(new File(picturePath));
     }
 }

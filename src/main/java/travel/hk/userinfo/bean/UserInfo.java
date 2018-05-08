@@ -3,11 +3,21 @@ package travel.hk.userinfo.bean;
 import java.util.Date;
 
 public class UserInfo {
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     private String userId;
 
     private String name;
 
     private String sex;
+
+    private String picture;
 
     private String email;
 

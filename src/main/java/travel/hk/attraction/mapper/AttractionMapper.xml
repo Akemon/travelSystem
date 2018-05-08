@@ -127,7 +127,7 @@
       #{goodPlace,jdbcType=VARCHAR}, #{hotLevel,jdbcType=VARCHAR}, #{transportation,jdbcType=VARCHAR}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="travel.hk.attraction.bean.Attraction">
+  <insert id="insertSelective" parameterType="travel.hk.attraction.bean.Attraction" useGeneratedKeys="true" keyProperty="touristAttractionId" keyColumn="tourist_attraction_id">
     insert into tb_tourist_attraction
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="touristAttractionId != null">

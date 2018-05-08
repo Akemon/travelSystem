@@ -5,6 +5,7 @@
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="picture" jdbcType="VARCHAR" property="picture"></result>
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -74,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, name, sex, email, birthday, password, telphone, country, city, street, gmt_create, 
+    user_id, name, sex, picture,email, birthday, password, telphone, country, city, street, gmt_create,
     gmt_modifited
   </sql>
   <select id="selectByExample" parameterType="travel.hk.userinfo.bean.UserInfoExample" resultMap="BaseResultMap">
@@ -119,7 +120,7 @@
       #{street,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifited,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="travel.hk.userinfo.bean.UserInfo">
+  <insert id="insertSelective" parameterType="travel.hk.userinfo.bean.UserInfo" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
     insert into tb_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -274,6 +275,9 @@
       </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},

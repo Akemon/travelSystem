@@ -6,10 +6,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.multipart.MultipartFile;
+import travel.common.test.MultipartFileTestUtil;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.mapper.UserInfoMapper;
 import travel.hk.userinfo.service.UserInfoService;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,5 +46,18 @@ public class UserInfoTest {
     public void testSelectOneUser(){
         UserInfo userInfo =userInfoService.getOneUserById("1");
         System.out.println(userInfo.getName());
+    }
+
+    @Test
+    public void testInsertNewUser(){
+        UserInfo user= new UserInfo();
+        File file =new File("G:\\图片\\婷婷\\婷婷1.jpg");
+        List<MultipartFile> fileList = new ArrayList<>();
+        MultipartFile  multipartFile = MultipartFileTestUtil.parseFileToMockMultipartFile(file);
+        fileList.add(multipartFile);
+        user.setUserId("SDFSD");
+        user.setPassword("123");
+        userInfoService.userRegister(user,fileList);
+
     }
 }

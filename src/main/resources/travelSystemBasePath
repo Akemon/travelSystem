@@ -1,1 +1,3 @@
-travelSystem.instantNote.picture.basePath=D:\\travelSystem\\instantNote\\picture
+travelSystem.instantNote.picture.basePath=F:\\travelSystem\\instantNote\\picture
+travelSystem.attraction.picture.basePath=C:\\travelSystem\\note\\picture
+travelSystem.userInfo.picture.basePath=C:\\travelSystem\\userInfo\\picture

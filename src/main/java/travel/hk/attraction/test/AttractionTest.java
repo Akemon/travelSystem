@@ -32,9 +32,13 @@ public class AttractionTest {
     public void testInsertNewAttraction(){
         Attraction attraction =new Attraction();
         File file =new File("G:\\图片\\婷婷\\婷婷1.jpg");
+        File file1 =new File("G:\\图片\\7730-1410231F306.jpg");
         List<MultipartFile> fileList = new ArrayList<>();
         MultipartFile  multipartFile =MultipartFileTestUtil.parseFileToMockMultipartFile(file);
+        MultipartFile  multipartFile1 =MultipartFileTestUtil.parseFileToMockMultipartFile(file1);
         fileList.add(multipartFile);
+        fileList.add(multipartFile1);
+        attraction.setName("华侨城");
         attractionService.createNewAttraction(attraction,fileList);
 
     }

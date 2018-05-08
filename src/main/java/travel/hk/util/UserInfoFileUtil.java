@@ -1,4 +1,4 @@
-package travel.hk.attraction.util;
+package travel.hk.util;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -8,17 +8,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class AttractionFileUtil
-{
-    private AttractionFileUtil() {}
+public class UserInfoFileUtil {
+    private UserInfoFileUtil() {}
 
-    public static String getAttractionPictureBasePath(){
+    public static String getUserInfoPictureBasePath(){
         Properties properties=new Properties();
         Resource resource = new ClassPathResource("travelSystemBasePath");
-//        System.out.println("inputStream:"+inputStream);
         try {
             properties.load(resource.getInputStream());
-            return (String)properties.get("travelSystem.attraction.picture.basePath");
+            return (String)properties.get("travelSystem.userInfo.picture.basePath");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e.getMessage());

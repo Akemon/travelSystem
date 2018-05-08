@@ -1,6 +1,9 @@
 package travel.hk.attraction.bean;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.Date;
+import java.util.List;
 
 public class Attraction {
     private Integer touristAttractionId;
@@ -36,6 +39,17 @@ public class Attraction {
     private Date gmtCreate;
 
     private Date gmtModifited;
+
+    //图片文件
+//    private List<ResponseEntity<byte[]>> pictureList;
+//
+//    public List<ResponseEntity<byte[]>> getPictureList() {
+//        return pictureList;
+//    }
+
+//    public void setPictureList(List<ResponseEntity<byte[]>> pictureList) {
+//        this.pictureList = pictureList;
+//    }
 
     public Integer getTouristAttractionId() {
         return touristAttractionId;
