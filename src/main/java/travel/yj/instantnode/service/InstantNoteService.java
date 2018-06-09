@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import travel.common.util.DateUtil;
 import travel.hk.userinfo.bean.UserInfo;
 import travel.hk.userinfo.service.UserInfoService;
 import travel.yj.followlist.service.FollowPeopleListService;
@@ -124,6 +125,32 @@ public class InstantNoteService {
         return instantNoteMapper.selectByPrimaryKey(instantNoteId);
     }
 
+    /**
+     * 根据instantNoteId获取对应的InstantNote
+     * @param instantNoteId 需要筛选的instantNoteId
+     * @return 对应的instantNote
+     */
+    public String selectOneInstantNoteJsonObjectStringById(Integer instantNoteId){
+        //查找相应一条的朋友圈
+        InstantNote instantNote=instantNoteMapper.selectByPrimaryKey(instantNoteId);
+        //转换成JsonObject
+        JsonObject jsonObject=parseInstantNoteToJsonObject(instantNote);
+        return jsonObject.toString();
+    }
+
+    /***
+     * 获取所有朋友圈
+     * @return JsonArray字符串
+     */
+    public String selectAll(){
+        //1.获取所有的朋友圈
+        List<InstantNote> listAll=instantNoteMapper.selectAll();
+        //2.转换成字符串
+        JsonArray jsonArray=parseListInstantNoteToJsonArray(listAll);
+        return jsonArray.toString();
+    }
+
+
 
     private InstantNote parseInstantNote(String createrId,String content,String location){
         InstantNote newInstantNote=new InstantNote();
@@ -161,9 +188,11 @@ public class InstantNoteService {
 
         Integer instantNoteId=instantNote.getInstantNoteId();
         String createrName=createrUser.getName();
+        String userId=createrUser.getUserId();
         String content=instantNote.getContent();
         String location=instantNote.getLocation();
         Integer likeNumber=instantNote.getLikeNumber();
+        String createTime= DateUtil.formatDate(instantNote.getGmtCreate());
         //一系列评论
         List<InstantNoteComment> listInstantNoteComment=instantNote.getListInstantNodeComment();
         //一系列图片
@@ -177,6 +206,8 @@ public class InstantNoteService {
         jsonObject.addProperty("createrName",createrName);
         jsonObject.addProperty("content",content);
         jsonObject.addProperty("location",location);
+        jsonObject.addProperty("createTime",createTime);
+        jsonObject.addProperty("createId",userId);
         jsonObject.add("listPicture",listInstantNotePictureJsonArray);
         jsonObject.add("listComment",listInstantNoteCommentJsonArray);
         jsonObject.add("listLikePeople",listLikePeople);

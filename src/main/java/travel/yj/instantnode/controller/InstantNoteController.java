@@ -48,4 +48,18 @@ public class InstantNoteController {
         return result;
     }
 
+    @RequestMapping(value="selectAllInstantNote",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public String selectAllInstantNote(){
+        String result=instantNoteService.selectAll();
+        return result;
+    }
+
+    @RequestMapping(value="selectOneInstantNoteById",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public String selectOneInstantNoteById(int instantNoteId){
+        String result=instantNoteService.selectOneInstantNoteJsonObjectStringById(instantNoteId);
+        return result;
+    }
+
 }
